@@ -33,7 +33,16 @@ namespace ADO
             connector.Select(cmd);
             Console.WriteLine("\n---------------------------------------------------------\n");
 
-            connector.Update("Directors", "last_name", "N'Cameron'");
+            //connector.Update("Directors", "last_name", "N'Cameron'", "last_name = N'Michael'");
+            //connector.Select("SELECT * FROM Directors");
+            //Console.WriteLine("\n---------------------------------------------------------\n");
+
+            //connector.Insert("Directors", $"{connector.MAX_PrimaryKey("Directors", "director_id")+1},N'Spielberg',N'Steven'");
+            //connector.Select("SELECT * FROM Directors");
+            //Console.WriteLine("\n---------------------------------------------------------\n");
+
+            connector.Update("Directors","last_name","N'Scott'",$"director_id = {connector.MAX_PrimaryKey("Directors", "director_id")}");
+            connector.Update("Directors","first_name","N'Ridley'",$"director_id = {connector.MAX_PrimaryKey("Directors", "director_id")}");
             connector.Select("SELECT * FROM Directors");
         }
     }

@@ -72,5 +72,14 @@ namespace ADO
             command.ExecuteNonQuery();
             connection.Close();
         }
+        public int MAX_PrimaryKey(string table, string field_id)
+        {
+            string cmd = $"SELECT MAX({field_id}) FROM {table}";
+            connection.Open();
+            SqlCommand command = new SqlCommand(cmd, connection);
+            int MAX_key = (Int32)command.ExecuteScalar();
+            connection.Close();
+            return MAX_key;
+        }
     }
 }
