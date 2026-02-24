@@ -12,16 +12,29 @@ namespace ADO
     {
         static void Main(string[] args)
         {
-            string connection_string = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Movies_SPU_411;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            //string connection_string = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Movies_SPU_411;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            string connection_string = "Data Source=(localdb)\\MSSQLLocalDB;"
+                                        + "Initial Catalog=Movies_SPU_411;"
+                                        + "Integrated Security=True;"
+                                        + "Connect Timeout=30;"
+                                        + "Encrypt=False;"
+                                        + "TrustServerCertificate=False;"
+                                        + "ApplicationIntent=ReadWrite;"
+                                        + "MultiSubnetFailover=False";
             SqlConnection connection = new SqlConnection(connection_string);
             string cmd = "SELECT title,year,first_name,last_name FROM Movies JOIN Directors ON(director=director_id)";
             
             Connector connector = new Connector(connection_string);
             connector.Select("title,year,first_name,last_name", "Movies,Directors", "director=director_id");
             Console.WriteLine("\n---------------------------------------------------------\n");
+            
+            //connector.Insert("Directors", "6,N'Tarantino',N'Quentin'");
+            //connector.Select("*", "Directors");
+            connector.Select(cmd);
+            Console.WriteLine("\n---------------------------------------------------------\n");
 
-            connector.Insert("Directors", "6,N'Tarantino',N'Quentin'");
-            connector.Select("*", "Directors");
+            connector.Update("Directors", "last_name", "N'Cameron'");
+            connector.Select("SELECT * FROM Directors");
         }
     }
 }
