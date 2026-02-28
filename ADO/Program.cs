@@ -27,23 +27,34 @@ namespace ADO
             Connector connector = new Connector(connection_string);
             connector.Select("title,year,first_name,last_name", "Movies,Directors", "director=director_id");
             Console.WriteLine("\n---------------------------------------------------------\n");
-            
-            //connector.Insert("Directors", "6,N'Tarantino',N'Quentin'");
-            //connector.Select("*", "Directors");
-            connector.Select(cmd);
+
+            string table = "Directors";
+            //Console.WriteLine(connector.Scalar($"SELECT MAX(director_id) FROM {table}"));
+            Console.WriteLine(connector.GetLastPrimaryKey(table));
+            Console.WriteLine(connector.GetNextPrimaryKey(table));
+            Console.WriteLine(connector.GetPrimaryKeyColumn(table));
+            connector.Insert($"{table}", $"{connector.GetNextPrimaryKey("Directors")},N'Besson',N'Luc'");
+            connector.Select("*", "Directors");
             Console.WriteLine("\n---------------------------------------------------------\n");
+
+            //=================HOMEWORK==========================
+            //connector.Select(cmd);
+            //Console.WriteLine("\n---------------------------------------------------------\n");
 
             //connector.Update("Directors", "last_name", "N'Cameron'", "last_name = N'Michael'");
             //connector.Select("SELECT * FROM Directors");
             //Console.WriteLine("\n---------------------------------------------------------\n");
 
-            //connector.Insert("Directors", $"{connector.MAX_PrimaryKey("Directors", "director_id")+1},N'Spielberg',N'Steven'");
+            //connector.Insert("Directors", $"{connector.MAX_PrimaryKey("Directors", "director_id")+1},N'Besson',N'Luc'");
             //connector.Select("SELECT * FROM Directors");
             //Console.WriteLine("\n---------------------------------------------------------\n");
 
-            connector.Update("Directors","last_name","N'Scott'",$"director_id = {connector.MAX_PrimaryKey("Directors", "director_id")}");
-            connector.Update("Directors","first_name","N'Ridley'",$"director_id = {connector.MAX_PrimaryKey("Directors", "director_id")}");
-            connector.Select("SELECT * FROM Directors");
+            //connector.Update("Directors","last_name","N'Scott'",$"director_id = {connector.MAX_PrimaryKey("Directors", "director_id")}");
+            //connector.Update("Directors","first_name","N'Ridley'",$"director_id = {connector.MAX_PrimaryKey("Directors", "director_id")}");
+            //connector.Select("SELECT * FROM Directors");
+            //===================================================
+
+            
         }
     }
 }
