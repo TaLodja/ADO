@@ -56,12 +56,6 @@ namespace ADO
             reader.Close();
             connection.Close();
         }
-        public void CheckExists(string table, string values)
-        {
-            
-        }
-
-
         public void Insert(string cmd)
         {
             connection.Open();
