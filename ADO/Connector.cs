@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Data.SqlClient;
+using System.Data;
 
 namespace ADO
 {
@@ -55,6 +56,12 @@ namespace ADO
             reader.Close();
             connection.Close();
         }
+        public void CheckExists(string table, string values)
+        {
+            
+        }
+
+
         public void Insert(string cmd)
         {
             connection.Open();
@@ -64,22 +71,38 @@ namespace ADO
         }
         public void Insert(string table, string values)
         {
-            string cmd = $"INSERT INTO {table} VALUES ({values})";
+            string[] value = values.Split(',');
+            string select_condition = "";
+            connection.Open();
+            SqlCommand command = new SqlCommand($"SELECT * FROM {table}", connection);
+            SqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            string[] column = new string[reader.FieldCount];
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                column[i] = reader.GetName(i);
+                if (i == 1) select_condition += $"{column[i]} = {value[i]}";
+                if (i > 2) select_condition += $"AND {column[i]} = {value[i]}";
+                //Console.WriteLine(column[i]);
+            }
+            reader.Close();
+            connection.Close();
+            string cmd = $"IF NOT EXISTS (SELECT * FROM {table} WHERE {select_condition}) INSERT INTO {table} VALUES ({values})";
             Insert(cmd);
-            //connection.Open();
-            //SqlCommand command = new SqlCommand(cmd, connection);
-            //command.ExecuteNonQuery();
-            //connection.Close();
+        }
+        public void Update(string cmd)
+        {
+            SqlCommand command = new SqlCommand(cmd, connection);
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
         }
         public void Update(string table, string fields, string new_value, string condition = "")
         { 
             string cmd = $"UPDATE {table} SET {fields} = {new_value}";
             if (condition != "") cmd += $" WHERE {condition}";
             cmd += ";";
-            connection.Open();
-            SqlCommand command = new SqlCommand(cmd, connection);
-            command.ExecuteNonQuery();
-            connection.Close();
+            Update(cmd);
         }
         public int MAX_PrimaryKey(string table, string field_id)
         {

@@ -28,33 +28,40 @@ namespace ADO
             connector.Select("title,year,first_name,last_name", "Movies,Directors", "director=director_id");
             Console.WriteLine("\n---------------------------------------------------------\n");
 
-            string table = "Directors";
+            //string table = "Directors";
             //Console.WriteLine(connector.Scalar($"SELECT MAX(director_id) FROM {table}"));
-            Console.WriteLine(connector.GetLastPrimaryKey(table));
-            Console.WriteLine(connector.GetNextPrimaryKey(table));
-            Console.WriteLine(connector.GetPrimaryKeyColumn(table));
-            connector.Insert($"{table}", $"{connector.GetNextPrimaryKey("Directors")},N'Besson',N'Luc'");
-            connector.Select("*", "Directors");
-            Console.WriteLine("\n---------------------------------------------------------\n");
+            //Console.WriteLine(connector.GetLastPrimaryKey(table));
+            //Console.WriteLine(connector.GetNextPrimaryKey(table));
+            //Console.WriteLine(connector.GetPrimaryKeyColumn(table));
+            //connector.Insert($"{table}", $"{connector.GetNextPrimaryKey("Directors")},N'Besson',N'Luc'");
+            //connector.Select("*", "Directors");
+            //Console.WriteLine("\n---------------------------------------------------------\n");
 
             //=================HOMEWORK==========================
             //connector.Select(cmd);
             //Console.WriteLine("\n---------------------------------------------------------\n");
 
+            //connector.Update("UPDATE Directors SET last_name = N'Lettich',first_name = N'Sheldon' WHERE director_id = 8");
             //connector.Update("Directors", "last_name", "N'Cameron'", "last_name = N'Michael'");
             //connector.Select("SELECT * FROM Directors");
             //Console.WriteLine("\n---------------------------------------------------------\n");
 
-            //connector.Insert("Directors", $"{connector.MAX_PrimaryKey("Directors", "director_id")+1},N'Besson',N'Luc'");
-            //connector.Select("SELECT * FROM Directors");
-            //Console.WriteLine("\n---------------------------------------------------------\n");
+            //connector.Insert
+            //    (
+            //    "IF NOT EXISTS (SELECT * FROM Directors WHERE last_name = N'Scott' AND first_name = N'Gray') "+
+            //    $"INSERT Directors VALUES({connector.GetNextPrimaryKey("Directors")},N'Scott',N'Gray')"
+            //    );
+            connector.Insert("Directors", $"{connector.GetNextPrimaryKey("Directors")},N'Rickman',N'Alan'");
+            connector.Select("SELECT * FROM Directors");
+            Console.WriteLine("\n---------------------------------------------------------\n");
 
-            //connector.Update("Directors","last_name","N'Scott'",$"director_id = {connector.MAX_PrimaryKey("Directors", "director_id")}");
+            //string[] columns = connector.Select("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'Directors'");
+
+
+           //connector.Update("Directors","last_name","N'Scott'",$"director_id = {connector.MAX_PrimaryKey("Directors", "director_id")}");
             //connector.Update("Directors","first_name","N'Ridley'",$"director_id = {connector.MAX_PrimaryKey("Directors", "director_id")}");
             //connector.Select("SELECT * FROM Directors");
             //===================================================
-
-            
         }
     }
 }
