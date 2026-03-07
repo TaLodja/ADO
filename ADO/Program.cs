@@ -67,6 +67,17 @@ namespace ADO
             Console.WriteLine(connector.GetPrimaryKey("Directors", "last_name, first_name","Cameron, James"));
             Console.WriteLine(connector.GetPrimaryKey("Movies", "title, year","The Heat, 1995-12-15"));
             Console.WriteLine(connector.GetPrimaryKey("Movies", "title, director","The Heat, 5"));
+            Console.WriteLine("\n---------------------------------------------------------\n");
+
+            //connector.Insert
+            //    (
+            //    $"INSERT Directors(director_id,last_name,first_name) VALUES({connector.GetNextPrimaryKey("Directors")},N'Martin',N'George')"
+            //    );
+            connector.Insert
+                (
+                $"INSERT Movies VALUES({connector.GetNextPrimaryKey("Movies")},N'Transformers',N'2007-07-04',13)"
+                );
+            connector.Select("SELECT * FROM Movies");
         }
     }
 }

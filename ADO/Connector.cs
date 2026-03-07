@@ -56,8 +56,42 @@ namespace ADO
             reader.Close();
             connection.Close();
         }
+        public string GetTableFromInsert(string cmd)
+        {
+            string[] parts = cmd.Split(' ', '(', ')');
+            return parts[1];
+        }
+        public string GetFieldsFromInsert(string cmd)
+        {
+            string parts = "";
+            connection.Open();
+            SqlCommand command = new SqlCommand($"SELECT * FROM {GetTableFromInsert(cmd)}", connection);
+            SqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                parts += reader.GetName(i);
+                if (i < reader.FieldCount - 1) parts += ",";
+            }
+            reader.Close();
+            connection.Close();
+            return parts;
+            //string[] parts = cmd.Split('(', ')');
+            //return parts[1];
+        }
+        public string GetValuesFromInsert(string cmd)
+        {
+            string[] parts = cmd.Split('(', ')');
+            return parts[1];
+        }
         public void Insert(string cmd)
         {
+            Console.WriteLine(cmd);
+            Console.WriteLine(GetTableFromInsert(cmd));
+            Console.WriteLine(GetFieldsFromInsert(cmd));
+            Console.WriteLine(GetValuesFromInsert(cmd));
+            if (GetPrimaryKey(GetTableFromInsert(cmd),GetFieldsFromInsert(cmd),GetValuesFromInsert(cmd))!=null) 
+                return;
             connection.Open();
             SqlCommand command = new SqlCommand(cmd, connection);
             command.ExecuteNonQuery();
@@ -65,23 +99,25 @@ namespace ADO
         }
         public void Insert(string table, string values)
         {
-            string[] value = values.Split(',');
-            string select_condition = "";
-            connection.Open();
-            SqlCommand command = new SqlCommand($"SELECT * FROM {table}", connection);
-            SqlDataReader reader = command.ExecuteReader();
-            reader.Read();
-            string[] column = new string[reader.FieldCount];
-            for (int i = 0; i < reader.FieldCount; i++)
-            {
-                column[i] = reader.GetName(i);
-                if (i == 1) select_condition += $"{column[i]} = {value[i]}";
-                if (i > 2) select_condition += $"AND {column[i]} = {value[i]}";
-                //Console.WriteLine(column[i]);
-            }
-            reader.Close();
-            connection.Close();
-            string cmd = $"IF NOT EXISTS (SELECT * FROM {table} WHERE {select_condition}) INSERT INTO {table} VALUES ({values})";
+            //string[] value = values.Split(',');
+            //string select_condition = "";
+            //connection.Open();
+            //SqlCommand command = new SqlCommand($"SELECT * FROM {table}", connection);
+            //SqlDataReader reader = command.ExecuteReader();
+            //reader.Read();
+            //string[] column = new string[reader.FieldCount];
+            //for (int i = 0; i < reader.FieldCount; i++)
+            //{
+            //    column[i] = reader.GetName(i);
+            //    if (i == 1) select_condition += $"{column[i]} = {value[i]}";
+            //    if (i > 2) select_condition += $"AND {column[i]} = {value[i]}";
+            //    //Console.WriteLine(column[i]);
+            //}
+            //reader.Close();
+            //connection.Close();
+            //string cmd = $"IF NOT EXISTS (SELECT * FROM {table} WHERE {select_condition}) INSERT INTO {table} VALUES ({values})";
+            
+            string cmd = $"INSERT INTO {table} VALUES ({values})";
             Insert(cmd);
         }
         public void Update(string cmd)
@@ -144,7 +180,12 @@ namespace ADO
             string condition = "";
             for (int i = 0; i < s_values.Length; i++)
             {
-                condition += $"{s_fields[i].Trim()} = N'{s_values[i].Trim()}'";
+                if (s_fields[i].Contains("_id")) continue;
+                string value = s_values[i].Trim();
+                condition += 
+                    (value.Length > 1 && value[0] != 'N' && value[1] != '\'')
+                    ? $"{s_fields[i].Trim()} = N'{s_values[i].Trim()}'"
+                    : $"{s_fields[i].Trim()}={s_values[i].Trim()}";
                 if (i != s_values.Length - 1) condition += " AND ";
             }
             string cmd = $"SELECT {GetPrimaryKeyColumn(table)} FROM {table} WHERE {condition}";
