@@ -127,6 +127,29 @@ namespace ADO
                 //$"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'{table}'"
                 );
         }
+        public object GetPrimaryKey(string cmd)
+        {
+            //string key_name = $"{table.Substring(0, table.Length-1)}_id";
+            SqlCommand command = new SqlCommand(cmd, connection);
+            connection.Open();
+            object primary_key = command.ExecuteScalar();
+            connection.Close();
+            return primary_key;
+        }
+        public object GetPrimaryKey(string table, string fields, string values)
+        {
+            string[] s_fields = fields.Split(',');
+            string[] s_values = values.Split(',');
+            if (s_fields.Length != s_values.Length) return null;
+            string condition = "";
+            for (int i = 0; i < s_values.Length; i++)
+            {
+                condition += $"{s_fields[i].Trim()} = N'{s_values[i].Trim()}'";
+                if (i != s_values.Length - 1) condition += " AND ";
+            }
+            string cmd = $"SELECT {GetPrimaryKeyColumn(table)} FROM {table} WHERE {condition}";
+            return Scalar(cmd);
+        }
         public int GetLastPrimaryKey(string table)
         {
             return Convert.ToInt32(Scalar($"SELECT MAX({GetPrimaryKeyColumn(table)}) FROM {table}"));
