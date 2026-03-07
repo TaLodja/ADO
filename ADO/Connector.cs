@@ -97,8 +97,9 @@ namespace ADO
             command.ExecuteNonQuery();
             connection.Close();
         }
-        public void Insert(string table, string values)
-        {
+        public void Insert(string table, string values) => Insert($"INSERT INTO {table} VALUES ({values})");
+        //{
+            //=======In Home=========
             //string[] value = values.Split(',');
             //string select_condition = "";
             //connection.Open();
@@ -117,9 +118,10 @@ namespace ADO
             //connection.Close();
             //string cmd = $"IF NOT EXISTS (SELECT * FROM {table} WHERE {select_condition}) INSERT INTO {table} VALUES ({values})";
             
-            string cmd = $"INSERT INTO {table} VALUES ({values})";
-            Insert(cmd);
-        }
+            //=======In Class=========
+            //string cmd = $"INSERT INTO {table} VALUES ({values})";
+            //Insert(cmd);
+        //}
         public void Update(string cmd)
         {
             SqlCommand command = new SqlCommand(cmd, connection);
