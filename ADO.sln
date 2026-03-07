@@ -12,6 +12,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectorCheck", "Connector
 		{8F09E821-677C-4EA0-A66E-EB5FE3BEFC36} = {8F09E821-677C-4EA0-A66E-EB5FE3BEFC36}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connector", "Connector\Connector.csproj", "{AA26DB35-EC3F-40A5-BB7C-6852F76998A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectorCheckInClass", "ConnectorCheckInClass\ConnectorCheckInClass.csproj", "{1AC9CEA4-E043-49F3-A0A8-BF36BB388E44}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AA26DB35-EC3F-40A5-BB7C-6852F76998A6} = {AA26DB35-EC3F-40A5-BB7C-6852F76998A6}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +37,14 @@ Global
 		{F082DB1A-05D6-478C-B1EA-592851C063E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F082DB1A-05D6-478C-B1EA-592851C063E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F082DB1A-05D6-478C-B1EA-592851C063E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA26DB35-EC3F-40A5-BB7C-6852F76998A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA26DB35-EC3F-40A5-BB7C-6852F76998A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA26DB35-EC3F-40A5-BB7C-6852F76998A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA26DB35-EC3F-40A5-BB7C-6852F76998A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AC9CEA4-E043-49F3-A0A8-BF36BB388E44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AC9CEA4-E043-49F3-A0A8-BF36BB388E44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AC9CEA4-E043-49F3-A0A8-BF36BB388E44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AC9CEA4-E043-49F3-A0A8-BF36BB388E44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
