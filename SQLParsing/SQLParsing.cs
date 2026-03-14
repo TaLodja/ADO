@@ -14,9 +14,9 @@ namespace SQLParsing
         {
             if (cmd.Contains("JOIN"))
             {
-                string[] stringDelimiter = new string[] { "JOIN", "join", "Join" };
-                string[] part_0_Delimiter = new string[] { "FROM", "from", "From" };
-                string[] part_i_Delimiter = new string[] { "ON", "on", "On" };
+                string[] stringDelimiter = new string[] { "JOIN" };
+                string[] part_0_Delimiter = new string[] { "FROM" };
+                string[] part_i_Delimiter = new string[] { "ON" };
                 string[] parts = cmd.Split(stringDelimiter, StringSplitOptions.RemoveEmptyEntries);
                 string[] tables = parts;
                 string[] tables0 = parts[0].Split(part_0_Delimiter, StringSplitOptions.RemoveEmptyEntries);
@@ -31,7 +31,7 @@ namespace SQLParsing
             }
             else
             {
-                string[] stringDelimiter = new string[] { "FROM", "from", "From", "WHERE", "where", "Where", "GROUP", "group", "Group" };
+                string[] stringDelimiter = new string[] { "FROM", "WHERE", "GROUP" };
                 string[] parts = cmd.Split(stringDelimiter, StringSplitOptions.RemoveEmptyEntries);
                 string[] tables = parts[1].Split(',');
                 Console.WriteLine("SELECT tables:\n");
@@ -45,7 +45,7 @@ namespace SQLParsing
         }
         public string[] GetFieldFromSelect(string cmd)
         {
-            string[] stringDelimiter = new string[] { "SELECT", "select", "Select", "FROM", "from", "From" };
+            string[] stringDelimiter = new string[] { "SELECT", "FROM" };
             string[] parts = cmd.Split(stringDelimiter, StringSplitOptions.RemoveEmptyEntries);
             string[] fields = parts[0].Split(',');
             Console.WriteLine("SELECT fields:\n");
@@ -59,7 +59,8 @@ namespace SQLParsing
         public string[] GetConditions(string cmd, string fieldORvalue, string[] stringDelimiter)
         {
             string[] parts = cmd.Split(stringDelimiter, StringSplitOptions.RemoveEmptyEntries);
-            string[] partDelimiter = new string[] { "AND", "and", "And", "," };
+            string[] partDelimiter = new string[] { "AND", "," };
+            string[] fieldDelimiter = new string[] { "LIKE", "=", "<", ">", "!" };
             string[] conditions = parts[1].Split(partDelimiter, StringSplitOptions.RemoveEmptyEntries);
             string[] fieldInCondition = parts[1].Split(partDelimiter, StringSplitOptions.RemoveEmptyEntries); ;
             string[] valueInCondition = parts[1].Split(partDelimiter, StringSplitOptions.RemoveEmptyEntries); ;
@@ -69,7 +70,7 @@ namespace SQLParsing
             }
             for (int i = 0; i < conditions.Length; i++)
             {
-                string[] partsCondition = conditions[i].Split('=', '<', '>', '!');
+                string[] partsCondition = conditions[i].Split(fieldDelimiter, StringSplitOptions.RemoveEmptyEntries);
                 fieldInCondition[i] = partsCondition[0].Trim();
                 valueInCondition[i] = partsCondition[1].Trim();
             }
@@ -94,24 +95,24 @@ namespace SQLParsing
         }
         public string[] GetWHERECondition(string cmd, string fieldORvalue = "")
         {
-            string[] stringDelimiter = new string[] { "WHERE", "where", "Where", "GROUP", "group", "Group", "HAVING", "having", "Having", "ORDER", "order", "Order" };
+            string[] stringDelimiter = new string[] { "WHERE", "GROUP", "HAVING", "ORDER" };
             return GetConditions(cmd, fieldORvalue, stringDelimiter);
         }
 
         public string[] GetHAVINGCondition(string cmd, string fieldORvalue = "")
         {
-            string[] stringDelimiter = new string[] { "HAVING", "having", "Having", "ORDER", "order", "Order" };
+            string[] stringDelimiter = new string[] { "HAVING", "ORDER" };
             return GetConditions(cmd, fieldORvalue, stringDelimiter);
         }
         public string[] GetJOINCondition(string cmd)
         {
-            string[] stringDelimiter = new string[] { "JOIN", "join", "Join", "WHERE", "where", "Where", "GROUP", "group", "Group" };
-            string[] partDelimiter = new string[] { "ON", "on", "On" };
+            string[] stringDelimiter = new string[] { "JOIN", "WHERE", "GROUP" };
+            string[] partDelimiter = new string[] { "ON" };
             string[] parts = cmd.Split(stringDelimiter, StringSplitOptions.RemoveEmptyEntries);
             int count = 0;
             for (int i=0; i<parts.Length; i++)
             {
-                if (parts[i].Contains("ON") || parts[i].Contains("on") || parts[i].Contains("On")) count++;
+                if (parts[i].Contains("ON")) count++;
             }
             string[] conditions = new string[count];
             for (int i=0; i < count; i++)
@@ -125,7 +126,7 @@ namespace SQLParsing
         }
         public string[] GetGROUPFieldsFromSelect(string cmd)
         {
-            string[] stringDelimiter = new string[] { "GROUP BY", "group by", "Group By", "Group by", "HAVING", "having", "Having", "ORDER", "order", "Order" };
+            string[] stringDelimiter = new string[] { "GROUP BY", "HAVING", "ORDER" };
             string[] parts = cmd.Split(stringDelimiter, StringSplitOptions.RemoveEmptyEntries);
             string[] fields = parts[1].Split(',');
             Console.WriteLine("GROUP BY fields:\n");
@@ -138,7 +139,7 @@ namespace SQLParsing
         }
         public string GetORDERFieldFromSelect(string cmd)
         {
-            string[] stringDelimiter = new string[] { "ORDER BY", "order by", "Order By", "Order by", "ASC", "asc", "DESC", "desk" };
+            string[] stringDelimiter = new string[] { "ORDER BY", "ASC", "DESC" };
             string[] parts = cmd.Split(stringDelimiter, StringSplitOptions.RemoveEmptyEntries);
             Console.WriteLine("ORDER BY field:\n");
             Console.WriteLine(parts[1].Trim());
@@ -170,7 +171,7 @@ namespace SQLParsing
         }
         public string[] GetSETConditions(string cmd, string fieldORvalue = "")
         {
-            string[] stringDelimiter = new string[] { "SET", "set", "Set", "WHERE", "where", "Where" };
+            string[] stringDelimiter = new string[] { "SET", "WHERE" };
             return GetConditions(cmd, fieldORvalue, stringDelimiter);
         }
     }
