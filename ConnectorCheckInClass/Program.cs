@@ -45,49 +45,49 @@ namespace ConnectorCheckInClass
 
 
             //===================================== SELECT Check ========================================
-            Console.WriteLine("\n=====================================SELECT Check========================================\n");
-            Console.WriteLine(cmd);
+            //Console.WriteLine("\n=====================================SELECT Check========================================\n");
+            //Console.WriteLine(cmd);
 
-            Console.WriteLine("\n---------------------------------------------------------\n");
-            string[] tables = sqlParsing.GetTableFromSelect(cmd);
-            Console.WriteLine("\n---------------------------------------------------------\n");
-            string[] fields = sqlParsing.GetFieldFromSelect(cmd);
-            Console.WriteLine("\n---------------------------------------------------------\n");
-            if (cmd.Contains("WHERE"))
-            {
-                string[] conditions = sqlParsing.GetWHERECondition(cmd);
-                Console.WriteLine("\n---------------------------------------------------------\n");
-                string[] fieldInCondition = sqlParsing.GetWHERECondition(cmd, "fields");
-                Console.WriteLine("\n---------------------------------------------------------\n");
-                string[] valueInCondition = sqlParsing.GetWHERECondition(cmd, "values");
-                Console.WriteLine("\n---------------------------------------------------------\n");
-            }
-            if (cmd.Contains("GROUP"))
-            {
-                string[] having_fields = sqlParsing.GetGROUPFieldsFromSelect(cmd);
-                Console.WriteLine("\n---------------------------------------------------------\n");
-                if (cmd.Contains("HAVING"))
-                {
-                    string[] conditions = sqlParsing.GetHAVINGCondition(cmd);
-                    Console.WriteLine("\n---------------------------------------------------------\n");
-                    string[] fieldInCondition = sqlParsing.GetHAVINGCondition(cmd, "fields");
-                    Console.WriteLine("\n---------------------------------------------------------\n");
-                    string[] valueInCondition = sqlParsing.GetHAVINGCondition(cmd, "values");
-                    Console.WriteLine("\n---------------------------------------------------------\n");
-                }
-            }
-            if (cmd.Contains("ORDER"))
-            {
-                string order_fields = sqlParsing.GetORDERFieldFromSelect(cmd);
-                Console.WriteLine("\n---------------------------------------------------------\n");
-            }
-            if (cmd.Contains("JOIN"))
-            {
-                Console.WriteLine("\nJOIN Conditions\n");
-                string[] joinConditions = sqlParsing.GetJOINCondition(cmd);
-                Console.WriteLine(joinConditions);
-                Console.WriteLine("\n---------------------------------------------------------\n");
-            }
+            //Console.WriteLine("\n---------------------------------------------------------\n");
+            //string[] tables = sqlParsing.GetTableFromSelect(cmd);
+            //Console.WriteLine("\n---------------------------------------------------------\n");
+            //string[] fields = sqlParsing.GetFieldFromSelect(cmd);
+            //Console.WriteLine("\n---------------------------------------------------------\n");
+            //if (cmd.Contains("WHERE"))
+            //{
+            //    string[] conditions = sqlParsing.GetWHERECondition(cmd);
+            //    Console.WriteLine("\n---------------------------------------------------------\n");
+            //    string[] fieldInCondition = sqlParsing.GetWHERECondition(cmd, "fields");
+            //    Console.WriteLine("\n---------------------------------------------------------\n");
+            //    string[] valueInCondition = sqlParsing.GetWHERECondition(cmd, "values");
+            //    Console.WriteLine("\n---------------------------------------------------------\n");
+            //}
+            //if (cmd.Contains("GROUP"))
+            //{
+            //    string[] having_fields = sqlParsing.GetGROUPFieldsFromSelect(cmd);
+            //    Console.WriteLine("\n---------------------------------------------------------\n");
+            //    if (cmd.Contains("HAVING"))
+            //    {
+            //        string[] conditions = sqlParsing.GetHAVINGCondition(cmd);
+            //        Console.WriteLine("\n---------------------------------------------------------\n");
+            //        string[] fieldInCondition = sqlParsing.GetHAVINGCondition(cmd, "fields");
+            //        Console.WriteLine("\n---------------------------------------------------------\n");
+            //        string[] valueInCondition = sqlParsing.GetHAVINGCondition(cmd, "values");
+            //        Console.WriteLine("\n---------------------------------------------------------\n");
+            //    }
+            //}
+            //if (cmd.Contains("ORDER"))
+            //{
+            //    string order_fields = sqlParsing.GetORDERFieldFromSelect(cmd);
+            //    Console.WriteLine("\n---------------------------------------------------------\n");
+            //}
+            //if (cmd.Contains("JOIN"))
+            //{
+            //    Console.WriteLine("\nJOIN Conditions\n");
+            //    string[] joinConditions = sqlParsing.GetJOINCondition(cmd);
+            //    Console.WriteLine(joinConditions);
+            //    Console.WriteLine("\n---------------------------------------------------------\n");
+            //}
 
             //=====================================INSERT Check========================================
             //Console.WriteLine("\n=====================================INSERT Check========================================\n");
@@ -143,14 +143,14 @@ namespace ConnectorCheckInClass
             //===================================== Connector Check OM SPU_411_Import ========================================
             //connector.Select("SELECT last_name, first_name, middle_name, birth_date, group_name, direction_name FROM Students,Groups,Directions WHERE [group] = group_id AND direction = direction_id AND direction_name LIKE N'Разработка%' ORDER BY last_name");
             //Console.WriteLine("\n---------------------------------------------------------\n");
-            connector.Select("SELECT group_name, COUNT(stud_id), direction_name FROM Students JOIN Groups ON [group] = group_id JOIN Directions ON direction = direction_id GROUP BY group_name, direction_name");
-            Console.WriteLine("\n---------------------------------------------------------\n");
+            //connector.Select("SELECT group_name, COUNT(stud_id), direction_name FROM Students JOIN Groups ON [group] = group_id JOIN Directions ON direction = direction_id GROUP BY group_name, direction_name");
+            //Console.WriteLine("\n---------------------------------------------------------\n");
             //connector.Insert($"INSERT Teachers(teacher_id,last_name, first_name, middle_name, birth_date) VALUES ({connector.GetNextPrimaryKey("Teachers")}, N'Петров', N'Петр', N'Петрович', N'2000-12-31')");
             //connector.Select("teacher_id,last_name, first_name, middle_name, birth_date", "Teachers");
             //Console.WriteLine("\n---------------------------------------------------------\n");
-            connector.Update("Teachers", "last_name", "N'Иванов'", "teacher_id = 10");
-            connector.Update("UPDATE Teachers SET last_name = N'Иванов', first_name = N'Иван', middle_name = N'Иванович' WHERE teacher_id = 10");
-            connector.Select("teacher_id,last_name, first_name, middle_name, birth_date", "Teachers");
+            //connector.Update("Teachers", "last_name", "N'Иванов'", "teacher_id = 10");
+            //connector.Update("UPDATE Teachers SET last_name = N'Иванов', first_name = N'Иван', middle_name = N'Иванович' WHERE teacher_id = 10");
+            //connector.Select("teacher_id,last_name, first_name, middle_name, birth_date", "Teachers");
         }
     }
 }
