@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SQLParsing;
+using System.Data;
 
 namespace Connector
 {
@@ -19,29 +19,59 @@ namespace Connector
             this.connection_string = connection_string;
             this.connection = new SqlConnection(connection_string);
         }
-        public void Select(string fields, string tables, string condition = "")
+        public DataTable Select(string fields, string tables, string condition = "")
         {
             string cmd = $"SELECT {fields} FROM {tables}";
             if (condition != "") cmd += $" WHERE {condition}";
             cmd += ";";
-            Select(cmd);
+            return Select(cmd);
         }
-        public void Select(string cmd)
+        //public void Select(string fields, string tables, string condition = "")
+        //{
+        //    string cmd = $"SELECT {fields} FROM {tables}";
+        //    if (condition != "") cmd += $" WHERE {condition}";
+        //    cmd += ";";
+        //    Select(cmd);
+        //}
+        public DataTable Select(string cmd)
         {
+            DataTable table = new DataTable();
             connection.Open();
             SqlCommand command = new SqlCommand(cmd, connection);
             SqlDataReader reader = command.ExecuteReader();
+            for (int i = 0; i < reader.FieldCount; i++)
+                table.Columns.Add(reader.GetName(i));
             while (reader.Read())
             {
+                DataRow row = table.NewRow();
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
+                    row[i] = reader[i];
                     Console.Write(reader[i].ToString().PadRight(29));
                 }
                 Console.WriteLine();
+                table.Rows.Add(row);
             }
             reader.Close();
             connection.Close();
+            return table;
         }
+        //public void Select(string cmd)
+        //{
+        //    connection.Open();
+        //    SqlCommand command = new SqlCommand(cmd, connection);
+        //    SqlDataReader reader = command.ExecuteReader();
+        //    while (reader.Read())
+        //    {
+        //        for (int i = 0; i < reader.FieldCount; i++)
+        //        {
+        //            Console.Write(reader[i].ToString().PadRight(29));
+        //        }
+        //        Console.WriteLine();
+        //    }
+        //    reader.Close();
+        //    connection.Close();
+        //}
         public void Insert(string cmd)
         {
             Console.WriteLine(cmd);
