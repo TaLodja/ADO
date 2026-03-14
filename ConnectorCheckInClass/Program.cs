@@ -32,11 +32,11 @@ namespace ConnectorCheckInClass
             //connector.Select("SELECT * FROM Directions");
 
             string cmd =
-            "UPDATE Teachers SET last_name = N'Иванов', first_name = N'Иван', middle_name = N'Иванович' WHERE teacher_id = 10";
+            //"UPDATE Teachers SET last_name = N'Иванов', first_name = N'Иван', middle_name = N'Иванович' WHERE teacher_id = 10";
             //"SELECT title,year,first_name,last_name FROM Movies JOIN Directors ON(director=director_id) JOIN Titles ON title = movie_id";
             //"SELECT director_id FROM Directors, Movies,      Directions,   Teacher GROUP BY teacher_id HAVING last_name = N'Cameron' AND first_name = N'James'";
             //"SELECT director_id FROM Directors, Movies,      Directions,   Teacher WHERE last_name = N'Cameron' AND first_name = N'James' ORDER BY direction_id";
-            //"SELECT last_name, first_name, middle_name, birth_date, group_name, direction_name FROM Students,Groups,Directions WHERE [group] = group_id AND direction = direction_id AND direction_name	LIKE N'Разработка%' ORDER BY last_name";
+            "SELECT last_name, first_name, middle_name, birth_date, group_name, direction_name FROM Students,Groups,Directions WHERE [group] = group_id AND direction = direction_id AND direction_name	LIKE N'Разработка%' ORDER BY last_name";
             //"SELECT group_name, COUNT(stud_id), direction_name FROM Students JOIN Groups ON [group] = group_id JOIN Directions ON direction = direction_id GROUP BY group_name, direction_name";
             //"INSERT Movies VALUES(6,N'Transformers',N'2007-07-04',13)";
             //$"INSERT Movies(movie_id, title, year, director) VALUES({connector.GetNextPrimaryKey("Movies")},N'Transformers',N'2007-07-04',13)";
@@ -45,49 +45,49 @@ namespace ConnectorCheckInClass
 
 
             //===================================== SELECT Check ========================================
-            //Console.WriteLine("\n=====================================SELECT Check========================================\n");
-            //Console.WriteLine(cmd);
+            Console.WriteLine("\n=====================================SELECT Check========================================\n");
+            Console.WriteLine(cmd);
 
-            //Console.WriteLine("\n---------------------------------------------------------\n");
-            //string[] tables = sqlParsing.GetTableFromSelect(cmd);
-            //Console.WriteLine("\n---------------------------------------------------------\n");
-            //string[] fields = sqlParsing.GetFieldFromSelect(cmd);
-            //Console.WriteLine("\n---------------------------------------------------------\n");
-            //if (cmd.Contains("WHERE"))
-            //{
-            //    string[] conditions = sqlParsing.GetWHERECondition(cmd);
-            //    Console.WriteLine("\n---------------------------------------------------------\n");
-            //    string[] fieldInCondition = sqlParsing.GetWHERECondition(cmd, "fields");
-            //    Console.WriteLine("\n---------------------------------------------------------\n");
-            //    string[] valueInCondition = sqlParsing.GetWHERECondition(cmd, "values");
-            //    Console.WriteLine("\n---------------------------------------------------------\n");
-            //}
-            //if (cmd.Contains("GROUP"))
-            //{
-            //    string[] having_fields = sqlParsing.GetGROUPFieldsFromSelect(cmd);
-            //    Console.WriteLine("\n---------------------------------------------------------\n");
-            //    if (cmd.Contains("HAVING"))
-            //    {
-            //    string[] conditions = sqlParsing.GetHAVINGCondition(cmd);
-            //    Console.WriteLine("\n---------------------------------------------------------\n");
-            //    string[] fieldInCondition = sqlParsing.GetHAVINGCondition(cmd, "fields");
-            //    Console.WriteLine("\n---------------------------------------------------------\n");
-            //    string[] valueInCondition = sqlParsing.GetHAVINGCondition(cmd, "values");
-            //    Console.WriteLine("\n---------------------------------------------------------\n");
-            //    }
-            //}
-            //if (cmd.Contains("ORDER"))
-            //{
-            //    string order_fields = sqlParsing.GetORDERFieldFromSelect(cmd);
-            //    Console.WriteLine("\n---------------------------------------------------------\n");
-            //}
-            //if (cmd.Contains("JOIN"))
-            //{
-            //    Console.WriteLine("\nJOIN Conditions\n");
-            //    string[] joinConditions = sqlParsing.GetJOINCondition(cmd);
-            //    Console.WriteLine(joinConditions);
-            //    Console.WriteLine("\n---------------------------------------------------------\n");
-            //}
+            Console.WriteLine("\n---------------------------------------------------------\n");
+            string[] tables = sqlParsing.GetTableFromSelect(cmd);
+            Console.WriteLine("\n---------------------------------------------------------\n");
+            string[] fields = sqlParsing.GetFieldFromSelect(cmd);
+            Console.WriteLine("\n---------------------------------------------------------\n");
+            if (cmd.Contains("WHERE"))
+            {
+                string[] conditions = sqlParsing.GetWHERECondition(cmd);
+                Console.WriteLine("\n---------------------------------------------------------\n");
+                string[] fieldInCondition = sqlParsing.GetWHERECondition(cmd, "fields");
+                Console.WriteLine("\n---------------------------------------------------------\n");
+                string[] valueInCondition = sqlParsing.GetWHERECondition(cmd, "values");
+                Console.WriteLine("\n---------------------------------------------------------\n");
+            }
+            if (cmd.Contains("GROUP"))
+            {
+                string[] having_fields = sqlParsing.GetGROUPFieldsFromSelect(cmd);
+                Console.WriteLine("\n---------------------------------------------------------\n");
+                if (cmd.Contains("HAVING"))
+                {
+                    string[] conditions = sqlParsing.GetHAVINGCondition(cmd);
+                    Console.WriteLine("\n---------------------------------------------------------\n");
+                    string[] fieldInCondition = sqlParsing.GetHAVINGCondition(cmd, "fields");
+                    Console.WriteLine("\n---------------------------------------------------------\n");
+                    string[] valueInCondition = sqlParsing.GetHAVINGCondition(cmd, "values");
+                    Console.WriteLine("\n---------------------------------------------------------\n");
+                }
+            }
+            if (cmd.Contains("ORDER"))
+            {
+                string order_fields = sqlParsing.GetORDERFieldFromSelect(cmd);
+                Console.WriteLine("\n---------------------------------------------------------\n");
+            }
+            if (cmd.Contains("JOIN"))
+            {
+                Console.WriteLine("\nJOIN Conditions\n");
+                string[] joinConditions = sqlParsing.GetJOINCondition(cmd);
+                Console.WriteLine(joinConditions);
+                Console.WriteLine("\n---------------------------------------------------------\n");
+            }
 
             //=====================================INSERT Check========================================
             //Console.WriteLine("\n=====================================INSERT Check========================================\n");
@@ -105,28 +105,28 @@ namespace ConnectorCheckInClass
             //Console.WriteLine("\n---------------------------------------------------------\n");
 
             //===================================== UPDATE Check ========================================
-            Console.WriteLine("\n=====================================UPDATE Check========================================\n");
-            Console.WriteLine(cmd);
-            string table = sqlParsing.GetTableFromUpdate(cmd);
-            Console.WriteLine(table);
-            Console.WriteLine("\n---------------------------------------------------------\n");
-            Console.WriteLine("\nSET Conditions\n");
-            string[] setConditions = sqlParsing.GetSETConditions(cmd);
-            Console.WriteLine("\n---------------------------------------------------------\n");
-            string[] setFields = sqlParsing.GetSETConditions(cmd, "fields");
-            Console.WriteLine("\n---------------------------------------------------------\n");
-            string[] setValues = sqlParsing.GetSETConditions(cmd, "values");
-            Console.WriteLine("\n---------------------------------------------------------\n");
-            if (cmd.Contains("WHERE"))
-            {
-                Console.WriteLine("\nWHERE Conditions\n");
-                string[] conditions = sqlParsing.GetWHERECondition(cmd);
-                Console.WriteLine("\n---------------------------------------------------------\n");
-                string[] fieldInCondition = sqlParsing.GetWHERECondition(cmd, "fields");
-                Console.WriteLine("\n---------------------------------------------------------\n");
-                string[] valueInCondition = sqlParsing.GetWHERECondition(cmd, "values");
-                Console.WriteLine("\n---------------------------------------------------------\n");
-            }
+            //Console.WriteLine("\n=====================================UPDATE Check========================================\n");
+            //Console.WriteLine(cmd);
+            //string table = sqlParsing.GetTableFromUpdate(cmd);
+            //Console.WriteLine(table);
+            //Console.WriteLine("\n---------------------------------------------------------\n");
+            //Console.WriteLine("\nSET Conditions\n");
+            //string[] setConditions = sqlParsing.GetSETConditions(cmd);
+            //Console.WriteLine("\n---------------------------------------------------------\n");
+            //string[] setFields = sqlParsing.GetSETConditions(cmd, "fields");
+            //Console.WriteLine("\n---------------------------------------------------------\n");
+            //string[] setValues = sqlParsing.GetSETConditions(cmd, "values");
+            //Console.WriteLine("\n---------------------------------------------------------\n");
+            //if (cmd.Contains("WHERE"))
+            //{
+            //    Console.WriteLine("\nWHERE Conditions\n");
+            //    string[] conditions = sqlParsing.GetWHERECondition(cmd);
+            //    Console.WriteLine("\n---------------------------------------------------------\n");
+            //    string[] fieldInCondition = sqlParsing.GetWHERECondition(cmd, "fields");
+            //    Console.WriteLine("\n---------------------------------------------------------\n");
+            //    string[] valueInCondition = sqlParsing.GetWHERECondition(cmd, "values");
+            //    Console.WriteLine("\n---------------------------------------------------------\n");
+            //}
 
             //===================================== Connector Check OM Movies_SPU_411 ========================================
             //connector.Select("title,year,first_name,last_name", "Movies,Directors", "director=director_id");

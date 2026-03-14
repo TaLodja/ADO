@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectorCheckInClass", "Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLParsing", "SQLParsing\SQLParsing.csproj", "{AE6C76AC-7AE9-4D8E-B53B-51CE040C0677}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Academy", "Academy\Academy.csproj", "{D4932853-712B-458B-A514-D036807DE918}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{AE6C76AC-7AE9-4D8E-B53B-51CE040C0677}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE6C76AC-7AE9-4D8E-B53B-51CE040C0677}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE6C76AC-7AE9-4D8E-B53B-51CE040C0677}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4932853-712B-458B-A514-D036807DE918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4932853-712B-458B-A514-D036807DE918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4932853-712B-458B-A514-D036807DE918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4932853-712B-458B-A514-D036807DE918}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
