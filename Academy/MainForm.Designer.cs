@@ -57,6 +57,7 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(574, 382);
             this.tabControl.TabIndex = 0;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
             // 
             // tabPageStudents
             // 
@@ -121,12 +122,14 @@
             // 
             // dgvDirections
             // 
+            this.dgvDirections.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvDirections.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvDirections.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDirections.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvDirections.Location = new System.Drawing.Point(3, 3);
+            this.dgvDirections.Location = new System.Drawing.Point(0, 25);
             this.dgvDirections.Name = "dgvDirections";
-            this.dgvDirections.Size = new System.Drawing.Size(560, 350);
+            this.dgvDirections.Size = new System.Drawing.Size(570, 310);
             this.dgvDirections.TabIndex = 0;
             // 
             // toolStripStatusLabel
