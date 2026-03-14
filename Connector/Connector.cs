@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using SQLParsing;
+
 namespace Connector
 {
     public class Connector
     {
         string connection_string;
         SqlConnection connection;
+        SQLParsing.SQLParsing sqlParsing = new SQLParsing.SQLParsing();
         public Connector(string connection_string)
         {
             this.connection_string = connection_string;
@@ -39,46 +42,20 @@ namespace Connector
             reader.Close();
             connection.Close();
         }
-        public string GetTableFromInsert(string cmd)
-        {
-            string[] parts = cmd.Split(' ', '(', ')');
-            return parts[1];
-        }
-        public string GetFieldsFromInsert(string cmd)
-        {
-            string parts = "";
-            connection.Open();
-            SqlCommand command = new SqlCommand($"SELECT * FROM {GetTableFromInsert(cmd)}", connection);
-            SqlDataReader reader = command.ExecuteReader();
-            reader.Read();
-            for (int i = 0; i < reader.FieldCount; i++)
-            {
-                parts += reader.GetName(i);
-                if (i < reader.FieldCount - 1) parts += ",";
-            }
-            reader.Close();
-            connection.Close();
-            return parts;
-        }
-        public string GetValuesFromInsert(string cmd)
-        {
-            string[] parts = cmd.Split('(', ')');
-            return parts[1];
-        }
         public void Insert(string cmd)
         {
             Console.WriteLine(cmd);
-            Console.WriteLine(GetTableFromInsert(cmd));
-            Console.WriteLine(GetFieldsFromInsert(cmd));
-            Console.WriteLine(GetValuesFromInsert(cmd));
-            if (GetPrimaryKey(GetTableFromInsert(cmd), GetFieldsFromInsert(cmd), GetValuesFromInsert(cmd)) != null)
+            Console.WriteLine(sqlParsing.GetTableFromInsert(cmd));
+            Console.WriteLine(sqlParsing.GetFieldsFromInsert(cmd));
+            Console.WriteLine(sqlParsing.GetValuesFromInsert(cmd));
+            if (GetPrimaryKey(sqlParsing.GetTableFromInsert(cmd), sqlParsing.GetFieldsFromInsert(cmd), sqlParsing.GetValuesFromInsert(cmd)) != null)
                 return;
             connection.Open();
             SqlCommand command = new SqlCommand(cmd, connection);
             command.ExecuteNonQuery();
             connection.Close();
         }
-        public void Insert(string table, string values) => Insert($"INSERT {table} VALUES ({values})");
+        public void Insert(string table, string fields, string values) => Insert($"INSERT {table}({fields}) VALUES ({values})");
         public void Update(string cmd)
         {
             SqlCommand command = new SqlCommand(cmd, connection);
@@ -155,6 +132,22 @@ namespace Connector
         public int GetNextPrimaryKey(string table)
         {
             return GetLastPrimaryKey(table) + 1;
+        }
+        public string GetFields(string cmd)
+        {
+            string parts = "";
+            connection.Open();
+            SqlCommand command = new SqlCommand($"SELECT * FROM {sqlParsing.GetTableFromInsert(cmd)}", connection);
+            SqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                parts += reader.GetName(i);
+                if (i < reader.FieldCount - 1) parts += ",";
+            }
+            reader.Close();
+            connection.Close();
+            return parts;
         }
     }
 }

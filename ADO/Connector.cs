@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Data.SqlClient;
 using System.Data;
+using System.Globalization;
 
 namespace ADO
 {
@@ -65,7 +66,7 @@ namespace ADO
         {
             string parts = "";
             connection.Open();
-            SqlCommand command = new SqlCommand($"SELECT * FROM {GetTableFromInsert(cmd)}", connection);
+            SqlCommand command = new SqlCommand($"SELECT * FROM {GetTableFromSelect(cmd)}", connection);
             SqlDataReader reader = command.ExecuteReader();
             reader.Read();
             for (int i = 0; i < reader.FieldCount; i++)
