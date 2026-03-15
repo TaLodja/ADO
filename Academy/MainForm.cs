@@ -21,7 +21,7 @@ namespace Academy
             new Query
                 (
                 "Students,Groups,Directions",
-                "FORMATMESSAGE(N'%s %s %s',last_name,first_name,middle_name),group_name,direction_name",
+                "[Student] = FORMATMESSAGE(N'%s %s %s',last_name,first_name,middle_name),group_name,direction_name",
                 "[group]=group_id AND direction=direction_id"
                 ),
             new Query
@@ -36,9 +36,19 @@ namespace Academy
         };
         Connector connector;
         //Connector movies_connector;
+        DataGridView[] tables = null;
+        string[] statusBarSignatures =
+        {
+            "Количество студетов",
+            "Количество групп",
+            "Количество направлеоий",
+            "Количество дисциплин",
+            "Количество преподавателей"
+        };
         public MainForm()
         {
             InitializeComponent();
+            tables = new DataGridView[] {dgvStudents, dgvGroups, dgvDirections, dgvDisciplines, dgvTeachers};
             AllocConsole();
             connector = new Connector("Data Source=DESKTOP-MU2UJAA\\SQLEXPRESS;"
                                         + "Initial Catalog=SPU_411_Import;"
@@ -59,10 +69,15 @@ namespace Academy
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Console.WriteLine($"{(sender as TabControl).SelectedIndex}\t{tabControl.SelectedTab.Text}");
-            DataGridView dgv = this.GetType().GetField($"dgv{tabControl.SelectedTab.Text}").GetValue(this) as DataGridView;
+
+            //Работает при модификаторе доступа у dvg - public
+            /*DataGridView dgv = this.GetType().GetField($"dgv{tabControl.SelectedTab.Text}").GetValue(this) as DataGridView;
             dgv.DataSource = connector.Select($"SELECT * FROM {tabControl.SelectedTab.Text}");
-            toolStripStatusLabel.Text = $"Количество записей: {dgv.RowCount - 1}";
-            //Console.WriteLine();
+            toolStripStatusLabel.Text = $"Количество записей: {dgv.RowCount - 1}";*/
+
+            int i = tabControl.SelectedIndex;
+            tables[i].DataSource = connector.Select(queries[i].ToString());
+            toolStripStatusLabel.Text = $"{statusBarSignatures[i]}: {tables[i].RowCount - 1}";
         }
     }
 }

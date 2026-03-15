@@ -241,11 +241,11 @@
         private System.Windows.Forms.TabPage tabPageDisciplines;
         private System.Windows.Forms.TabPage tabPageTeachers;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
-        public System.Windows.Forms.DataGridView dgvDirections;
-        public System.Windows.Forms.DataGridView dgvStudents;
-        public System.Windows.Forms.DataGridView dgvGroups;
-        public System.Windows.Forms.DataGridView dgvDisciplines;
-        public System.Windows.Forms.DataGridView dgvTeachers;
+        private System.Windows.Forms.DataGridView dgvDirections;
+        private System.Windows.Forms.DataGridView dgvStudents;
+        private System.Windows.Forms.DataGridView dgvGroups;
+        private System.Windows.Forms.DataGridView dgvDisciplines;
+        private System.Windows.Forms.DataGridView dgvTeachers;
     }
 }
 
