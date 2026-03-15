@@ -135,9 +135,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvDirections.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvDirections.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDirections.Location = new System.Drawing.Point(0, 25);
+            this.dgvDirections.Location = new System.Drawing.Point(0, 34);
             this.dgvDirections.Name = "dgvDirections";
-            this.dgvDirections.Size = new System.Drawing.Size(570, 310);
+            this.dgvDirections.Size = new System.Drawing.Size(570, 301);
             this.dgvDirections.TabIndex = 0;
             // 
             // tabPageDisciplines
@@ -158,9 +158,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvDisciplines.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvDisciplines.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDisciplines.Location = new System.Drawing.Point(4, 27);
+            this.dgvDisciplines.Location = new System.Drawing.Point(4, 34);
             this.dgvDisciplines.Name = "dgvDisciplines";
-            this.dgvDisciplines.Size = new System.Drawing.Size(559, 308);
+            this.dgvDisciplines.Size = new System.Drawing.Size(559, 301);
             this.dgvDisciplines.TabIndex = 0;
             // 
             // tabPageTeachers
@@ -240,12 +240,12 @@
         private System.Windows.Forms.TabPage tabPageDirections;
         private System.Windows.Forms.TabPage tabPageDisciplines;
         private System.Windows.Forms.TabPage tabPageTeachers;
-        private System.Windows.Forms.DataGridView dgvDirections;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
-        private System.Windows.Forms.DataGridView dgvStudents;
-        private System.Windows.Forms.DataGridView dgvGroups;
-        private System.Windows.Forms.DataGridView dgvDisciplines;
-        private System.Windows.Forms.DataGridView dgvTeachers;
+        public System.Windows.Forms.DataGridView dgvDirections;
+        public System.Windows.Forms.DataGridView dgvStudents;
+        public System.Windows.Forms.DataGridView dgvGroups;
+        public System.Windows.Forms.DataGridView dgvDisciplines;
+        public System.Windows.Forms.DataGridView dgvTeachers;
     }
 }
 
