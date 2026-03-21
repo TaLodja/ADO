@@ -45,6 +45,7 @@
             this.dgvTeachers = new System.Windows.Forms.DataGridView();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.cbStudentsGroup = new System.Windows.Forms.ComboBox();
             this.tabControl.SuspendLayout();
             this.tabPageStudents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStudents)).BeginInit();
@@ -76,6 +77,7 @@
             // 
             // tabPageStudents
             // 
+            this.tabPageStudents.Controls.Add(this.cbStudentsGroup);
             this.tabPageStudents.Controls.Add(this.cbStudents);
             this.tabPageStudents.Controls.Add(this.dgvStudents);
             this.tabPageStudents.Location = new System.Drawing.Point(4, 22);
@@ -125,7 +127,7 @@
             this.cbGroups.Name = "cbGroups";
             this.cbGroups.Size = new System.Drawing.Size(275, 21);
             this.cbGroups.TabIndex = 2;
-            this.cbGroups.SelectionChangeCommitted += new System.EventHandler(this.cbGroups_SelectionChangeCommitted);
+            this.cbGroups.SelectedIndexChanged += new System.EventHandler(this.cbGroups_SelectedIndexChanged);
             // 
             // dgvGroups
             // 
@@ -181,6 +183,7 @@
             this.cbDisciplines.Name = "cbDisciplines";
             this.cbDisciplines.Size = new System.Drawing.Size(275, 21);
             this.cbDisciplines.TabIndex = 4;
+            this.cbDisciplines.SelectedIndexChanged += new System.EventHandler(this.cbDisciplines_SelectedIndexChanged);
             // 
             // dgvDisciplines
             // 
@@ -233,6 +236,14 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(112, 17);
             this.toolStripStatusLabel.Text = "toolStripStatusLabel";
             // 
+            // cbStudentsGroup
+            // 
+            this.cbStudentsGroup.FormattingEnabled = true;
+            this.cbStudentsGroup.Location = new System.Drawing.Point(305, 6);
+            this.cbStudentsGroup.Name = "cbStudentsGroup";
+            this.cbStudentsGroup.Size = new System.Drawing.Size(230, 21);
+            this.cbStudentsGroup.TabIndex = 4;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -280,6 +291,7 @@
         private System.Windows.Forms.ComboBox cbGroups;
         private System.Windows.Forms.ComboBox cbStudents;
         private System.Windows.Forms.ComboBox cbDisciplines;
+        private System.Windows.Forms.ComboBox cbStudentsGroup;
     }
 }
 

@@ -31,7 +31,11 @@ namespace Academy
                 "direction = direction_id"
                 ),
             new Query("Directions", "*"),
-            new Query("Disciplines","*"),
+            new Query(
+                "Disciplines,DisciplinesDirectionsRelation,Directions",
+                "discipline_id, discipline_name, number_of_lessons, direction_name",
+                "discipline_id = discipline AND direction = direction_id"
+                ),
             new Query("Teachers",   "*")
         };
         Connector connector;
@@ -50,7 +54,7 @@ namespace Academy
         {
             InitializeComponent();
             tables = new DataGridView[] { dgvStudents, dgvGroups, dgvDirections, dgvDisciplines, dgvTeachers };
-            filters = new ComboBox[] { cbStudents, cbGroups, null, cbDisciplines, null };
+            filters = new ComboBox[] { cbStudents, cbGroups, null, cbDisciplines, null, cbStudentsGroup };
             AllocConsole();
             connector = new Connector("Data Source=DESKTOP-MU2UJAA\\SQLEXPRESS;"
                                         + "Initial Catalog=SPU_411_Import;"
@@ -60,88 +64,66 @@ namespace Academy
                                         + "TrustServerCertificate=True;"
                                         + "ApplicationIntent=ReadWrite;"
                                         + "MultiSubnetFailover=False");
-            //movies_connector = new Connector("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Movies_SPU_411;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            //dgvDirections.DataSource = movies_connector.Select("SELECT [№\nп/п] = movie_id,[Название фильма] = title,[Режиссер] = FORMATMESSAGE(N'%s %s', first_name,last_name) FROM Movies, Directors WHERE director = director_id ORDER BY movie_id");
-            //dgvDirections.DataSource = movies_connector.Select("SELECT * FROM Movies");
             tabControl_SelectedIndexChanged(tabControl, null);
-            //tabControl.SelectedIndexChanged += tabControl_SelectedIndexChanged;
-            //dgvGroups.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dgvGroups_EditingControlShowing);
         }
         [DllImport("kernel32.dll")]
         private static extern bool AllocConsole();
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Console.WriteLine($"{(sender as TabControl).SelectedIndex}\t{tabControl.SelectedTab.Text}");
-
-            //Работает при модификаторе доступа у dvg - public
-            /*DataGridView dgv = this.GetType().GetField($"dgv{tabControl.SelectedTab.Text}").GetValue(this) as DataGridView;
-            dgv.DataSource = connector.Select($"SELECT * FROM {tabControl.SelectedTab.Text}");
-            toolStripStatusLabel.Text = $"Количество записей: {dgv.RowCount - 1}";*/
-
             int i = tabControl.SelectedIndex;
             tables[i].DataSource = connector.Select(queries[i].ToString());
             toolStripStatusLabel.Text = $"{statusBarSignatures[i]}: {tables[i].RowCount - 1}";
             if (filters[i] != null) FillComboBoxDirections();
+            FillComboBoxGroups();
         }
 
         private void FillComboBoxDirections()
         {
-            Query directions_name = new Query("Directions", "direction_name");
-            DataSet dataSet = new DataSet();
-            //int n = dgvDirections.RowCount;
+            string cmd = "SELECT direction_name FROM Directions";
             DataTable directions = new DataTable();
-            directions = connector.Select(directions_name.ToString());
+            directions = connector.Select(cmd);
             DataRow allDirections = directions.NewRow();
             directions.Rows.InsertAt(allDirections, 0);
             allDirections[0] = "All Directions";
-            int i = tabControl.SelectedIndex;
-            filters[i].DataSource = directions;
-            filters[i].DisplayMember = "direction_name";
+            filters[tabControl.SelectedIndex].DataSource = directions;
+            filters[tabControl.SelectedIndex].DisplayMember = "direction_name";
         }
-
-        private void cbGroups_SelectionChangeCommitted(object sender, EventArgs e)
+        private void FillComboBoxGroups()
+        {
+            string cmd = "SELECT group_name FROM Groups";
+            DataTable groups = new DataTable();
+            groups = connector.Select(cmd);
+            DataRow allGroups = groups.NewRow();
+            groups.Rows.InsertAt(allGroups, 0);
+            allGroups[0] = "All Groups";
+            cbStudentsGroup.DataSource = groups;
+            cbStudentsGroup.DisplayMember = "group_name";
+        }
+        private void cbGroups_SelectedIndexChanged(object sender, EventArgs e)
         {
             DataTable directions = new DataTable();
-            Console.WriteLine("\n======================================================================================\n");
-            Console.WriteLine(cbGroups.SelectedItem.ToString());
-            Console.WriteLine("\n======================================================================================\n");
-            if (cbGroups.SelectedIndex > -1 || cbGroups.SelectedItem.ToString() != "All Directions")
+            if (cbGroups.SelectedIndex == 0)
+                directions = connector.Select(queries[1].ToString());
+            if (cbGroups.SelectedIndex > 0)
             {
-                //string filterOnDirections = queries[1].AddCondition("direction_name LIKE N'Разработка%'");
-                string filterOnDirections = queries[1].AddCondition($"direction_name = N'{cbGroups.SelectedItem.ToString()}'");
+                string filterOnDirections = queries[1].AddCondition($"direction = N'{cbGroups.GetItemText(cbGroups.SelectedIndex)}'");
                 directions = connector.Select(filterOnDirections);
             }
-            if (cbGroups.SelectedIndex > -1 && cbGroups.SelectedText == "All Directions") 
-                directions = connector.Select(queries[1].ToString());
             tables[1].DataSource = directions;
         }
 
-
-        //private void dgvGroups_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        //{
-        //    ComboBox comboBoxGroups = e.Control as ComboBox;
-        //    if (comboBoxGroups != null)
-        //    {
-        //        comboBoxGroups.SelectedIndexChanged -= new EventHandler(cbGroups_SelectionChangeCommitted);
-        //        comboBoxGroups.SelectedIndexChanged += new EventHandler(cbGroups_SelectionChangeCommitted);
-        //    }
-        //}
-
-        //
-        //private void cbGroups_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    DataTable directions = new DataTable();
-        //    if (cbGroups.SelectedIndex > -1 && cbGroups.SelectedText != "All Directions")
-        //    if (cbGroups.SelectedIndex == -1) directions = connector.Select(queries[1].ToString());
-        //    {
-        //        string filterOnDirections = queries[1].AddCondition("direction_name LIKE N'Разработка%'");
-        //        //string filterOnDirections = queries[1].AddCondition($"direction_name = N'{cbGroups.SelectedItem.ToString()}'");
-        //        directions = connector.Select(filterOnDirections);
-        //    }
-        //    if (cbGroups.SelectedText == "All Directions") directions = connector.Select(queries[1].ToString());
-        //    tables[1].DataSource = directions;
-        //}
-
+        private void cbDisciplines_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataTable directions = new DataTable();
+            if (cbDisciplines.SelectedIndex == 0)
+                directions = connector.Select(queries[3].ToString());
+            if (cbDisciplines.SelectedIndex > 0)
+            {
+                string filterOnDirections = queries[3].AddCondition($"direction = N'{cbDisciplines.GetItemText(cbDisciplines.SelectedIndex)}'");
+                directions = connector.Select(filterOnDirections);
+            }
+            tables[3].DataSource = directions;
+        }
     }
 }
