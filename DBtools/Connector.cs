@@ -156,5 +156,24 @@ namespace DBtools
         {
             return GetLastPrimaryKey(table) + 1;
         }
+        //////////////////////////////////////////////////////////////////
+        
+        public Dictionary<string,int> LoadDictionary(string table)
+        {
+            Dictionary<string, int> dictionary = new Dictionary<string, int>();
+            string prefix = table.ToLower().Substring(0, table.Length - 1);
+            string key_name = $"{prefix}_name";
+            string value_name = $"{prefix}_id";
+            string cmd = $"SELECT {key_name},{value_name} FROM {table}";
+            
+            SqlCommand command = new SqlCommand(cmd, connection);
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+                dictionary.Add(Convert.ToString(reader[0]), Convert.ToInt32(reader[1]));
+            connection.Close();
+            
+            return dictionary;
+        }
     }
 }

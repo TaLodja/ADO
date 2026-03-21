@@ -37,6 +37,10 @@ namespace Academy
         Connector connector;
         //Connector movies_connector;
         DataGridView[] tables = null;
+        ///////////////////////////////////
+        
+        Dictionary<string, int> d_directions = null;
+        Dictionary<string, Dictionary<string,int>> d_trees = null;
         string[] statusBarSignatures =
         {
             "Количество студетов",
@@ -62,9 +66,31 @@ namespace Academy
             //dgvDirections.DataSource = movies_connector.Select("SELECT [№\nп/п] = movie_id,[Название фильма] = title,[Режиссер] = FORMATMESSAGE(N'%s %s', first_name,last_name) FROM Movies, Directors WHERE director = director_id ORDER BY movie_id");
             //dgvDirections.DataSource = movies_connector.Select("SELECT * FROM Movies");
             tabControl_SelectedIndexChanged(tabControl, null);
+
+            d_trees = new Dictionary<string, Dictionary<string,int>>();
+            d_trees.Add(nameof(d_directions), d_directions);
+            LoadDataToComboBox(cbGroupsDirection);
+            LoadDataToComboBox(cbStudentsGroup);
+            LoadDataToComboBox(cbStudentsDirection);
+            LoadDataToComboBox(cbDisciplinesDirection);
         }
         [DllImport("kernel32.dll")]
         private static extern bool AllocConsole();
+        void LoadDataToComboBox(ComboBox comboBox)
+        {
+            string table = comboBox.Name.Substring(Array.FindLastIndex<char>(comboBox.Name.ToCharArray(), Char.IsUpper))+"s";
+            string dictionary_name = $"d_{table}".ToLower();
+            Console.WriteLine("======================================");
+            Console.WriteLine(table);
+            Console.WriteLine(dictionary_name);
+            Console.WriteLine(nameof(comboBox));
+            Console.WriteLine("======================================");
+            d_trees[dictionary_name] = connector.LoadDictionary(table);
+            foreach(KeyValuePair<string,int> i in d_trees[dictionary_name])
+            {
+                comboBox.Items.Add(i.Key);
+            }
+        }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
