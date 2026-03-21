@@ -94,7 +94,7 @@ namespace Academy
             directions = connector.Select(directions_name.ToString());
             DataRow allDirections = directions.NewRow();
             directions.Rows.InsertAt(allDirections, 0);
-            allDirections[0] = null;
+            allDirections[0] = "All Directions";
             int i = tabControl.SelectedIndex;
             filters[i].DataSource = directions;
             filters[i].DisplayMember = "direction_name";
@@ -102,33 +102,46 @@ namespace Academy
 
         private void cbGroups_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if (cbGroups.SelectedIndex > -1 && cbGroups.SelectedText!=null)
+            DataTable directions = new DataTable();
+            Console.WriteLine("\n======================================================================================\n");
+            Console.WriteLine(cbGroups.SelectedItem.ToString());
+            Console.WriteLine("\n======================================================================================\n");
+            if (cbGroups.SelectedIndex > -1 || cbGroups.SelectedItem.ToString() != "All Directions")
             {
-                string filterOnDirections = $"{queries[1].ToString()} AND direction_name = N'{cbGroups.SelectedItem.ToString()}'";
-                DataTable directions = new DataTable();
+                //string filterOnDirections = queries[1].AddCondition("direction_name LIKE N'Разработка%'");
+                string filterOnDirections = queries[1].AddCondition($"direction_name = N'{cbGroups.SelectedItem.ToString()}'");
                 directions = connector.Select(filterOnDirections);
-                tables[1].DataSource = directions;
             }
-            if (cbGroups.SelectedText == null) tables[1].DataSource = connector.Select(queries[1].ToString());
+            if (cbGroups.SelectedIndex > -1 && cbGroups.SelectedText == "All Directions") 
+                directions = connector.Select(queries[1].ToString());
+            tables[1].DataSource = directions;
         }
+
 
         //private void dgvGroups_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         //{
         //    ComboBox comboBoxGroups = e.Control as ComboBox;
         //    if (comboBoxGroups != null)
         //    {
-        //        comboBoxGroups.SelectedIndexChanged -= new EventHandler(cbGroups_SelectedIndexChanged);
-        //        comboBoxGroups.SelectedIndexChanged += new EventHandler(cbGroups_SelectedIndexChanged);
+        //        comboBoxGroups.SelectedIndexChanged -= new EventHandler(cbGroups_SelectionChangeCommitted);
+        //        comboBoxGroups.SelectedIndexChanged += new EventHandler(cbGroups_SelectionChangeCommitted);
         //    }
         //}
+
         //
         //private void cbGroups_SelectedIndexChanged(object sender, EventArgs e)
         //{
-        //    string filterOnDirections =
-        //             $"SELECT group_name,weekdays,start_time,start_date,direction_name FROM Groups,Directions WHERE direction = direction_id AND direction_name = N'Разработка%'";
         //    DataTable directions = new DataTable();
-        //    directions = connector.Select(filterOnDirections);
-        //    if (cbGroups.SelectedIndex != -1) tables[1].DataSource = directions;
+        //    if (cbGroups.SelectedIndex > -1 && cbGroups.SelectedText != "All Directions")
+        //    if (cbGroups.SelectedIndex == -1) directions = connector.Select(queries[1].ToString());
+        //    {
+        //        string filterOnDirections = queries[1].AddCondition("direction_name LIKE N'Разработка%'");
+        //        //string filterOnDirections = queries[1].AddCondition($"direction_name = N'{cbGroups.SelectedItem.ToString()}'");
+        //        directions = connector.Select(filterOnDirections);
+        //    }
+        //    if (cbGroups.SelectedText == "All Directions") directions = connector.Select(queries[1].ToString());
+        //    tables[1].DataSource = directions;
         //}
+
     }
 }

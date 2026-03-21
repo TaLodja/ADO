@@ -25,17 +25,12 @@ namespace Academy
             cmd += ";";
             return cmd;
         }
-        public Query AddCondition(string addConditions)
+        public string AddCondition(string addConditions)
         {
-            Query newQuery = this;
-            string[] newConditions = addConditions.Split(',');
-            for (int i = 0; i < newConditions.Length; i++)
-            {
-                if (this.Condition != "") Condition += " AND ";
-                newConditions[i] = newConditions[i].Trim();
-                Condition += newConditions[i];
-            }
-            return newQuery;
+            string cmd = $"SELECT {Fields} FROM {Tables}";
+            if (Condition != "" && Condition != " ") cmd += $" WHERE {Condition} AND {addConditions}";
+            cmd += ";";
+            return cmd;
         }
     }
 }
