@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Academy
 {
@@ -23,6 +24,18 @@ namespace Academy
             if (Condition != "" && Condition != " ") cmd += $" WHERE {Condition}";
             cmd += ";";
             return cmd;
+        }
+        public Query AddCondition(string addConditions)
+        {
+            Query newQuery = this;
+            string[] newConditions = addConditions.Split(',');
+            for (int i = 0; i < newConditions.Length; i++)
+            {
+                if (this.Condition != "") Condition += " AND ";
+                newConditions[i] = newConditions[i].Trim();
+                Condition += newConditions[i];
+            }
+            return newQuery;
         }
     }
 }
