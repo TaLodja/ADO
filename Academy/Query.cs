@@ -32,5 +32,11 @@ namespace Academy
             cmd += ";";
             return cmd;
         }
+        public string AddTableWithConditions(string addTables, string addConditions)
+        {
+            string cmd = $"SELECT {Fields} FROM {Tables},{addTables} WHERE {addConditions}";
+            cmd += ";";
+            return cmd;
+        }
     }
 }

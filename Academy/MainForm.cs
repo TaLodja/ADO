@@ -31,13 +31,23 @@ namespace Academy
                 "direction = direction_id"
                 ),
             new Query("Directions", "*"),
-            new Query(
-                "Disciplines,DisciplinesDirectionsRelation,Directions",
-                "discipline_id, discipline_name, number_of_lessons, direction_name",
-                "discipline_id = discipline AND direction = direction_id"
-                ),
+            new Query("Disciplines", "discipline_id,discipline_name,number_of_lessons"),
             new Query("Teachers",   "*")
         };
+
+        Query TeachersForDiscipline = new Query
+            (
+            "Teachers,TeachersDisciplinesRelation,Disciplines",
+            "[Teachers] = FORMATMESSAGE(N'%s %s %s', last_name, first_name, middle_name)",
+            "teacher_id = teacher AND discipline_id = discipline"
+            );
+        Query DisciplinesForTeacher = new Query
+            (
+            "Teachers,TeachersDisciplinesRelation,Disciplines",
+            "discipline_name",
+            "teacher_id = teacher AND discipline_id = discipline"
+            );
+
         Connector connector;
         //Connector movies_connector;
         DataGridView[] tables = null;
@@ -76,6 +86,8 @@ namespace Academy
             toolStripStatusLabel.Text = $"{statusBarSignatures[i]}: {tables[i].RowCount - 1}";
             if (filters[i] != null) FillComboBoxDirections();
             FillComboBoxGroups();
+            dgvTeachersDiscipline.Visible = false;
+            dgvDisciplinesTeacher.Visible = false;
         }
 
         private void FillComboBoxDirections()
@@ -107,7 +119,7 @@ namespace Academy
                 directions = connector.Select(queries[1].ToString());
             if (cbGroups.SelectedIndex > 0)
             {
-                string filterOnDirections = queries[1].AddCondition($"direction = N'{cbGroups.GetItemText(cbGroups.SelectedIndex)}'");
+                string filterOnDirections = queries[1].AddCondition($"direction = N'{cbGroups.SelectedIndex}'");
                 directions = connector.Select(filterOnDirections);
             }
             tables[1].DataSource = directions;
@@ -120,10 +132,97 @@ namespace Academy
                 directions = connector.Select(queries[3].ToString());
             if (cbDisciplines.SelectedIndex > 0)
             {
-                string filterOnDirections = queries[3].AddCondition($"direction = N'{cbDisciplines.GetItemText(cbDisciplines.SelectedIndex)}'");
+                string filterOnDirections = queries[3].AddTableWithConditions("DisciplinesDirectionsRelation,Directions", $"discipline_id = discipline AND direction = direction_id AND direction = N'{cbDisciplines.SelectedIndex}'");
                 directions = connector.Select(filterOnDirections);
             }
             tables[3].DataSource = directions;
+        }
+
+        private void cbStudents_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataTable directions = new DataTable();
+            string filterOnDirections = "";
+            if (cbStudents.SelectedIndex == 0 && cbStudentsGroup.SelectedIndex == 0)
+                directions = connector.Select(queries[0].ToString());
+            if (cbStudents.SelectedIndex > 0 && cbStudentsGroup.SelectedIndex == 0)
+            {
+                filterOnDirections = queries[0].AddCondition($"direction = N'{cbStudents.SelectedIndex}'");
+                directions = connector.Select(filterOnDirections);
+            }
+            if (cbStudentsGroup.SelectedIndex > 0 && cbStudents.SelectedIndex == 0)
+            {
+                filterOnDirections = queries[0].AddCondition($"[group] = N'{cbStudentsGroup.SelectedIndex}'");
+                directions = connector.Select(filterOnDirections);
+            }
+            if (cbStudentsGroup.SelectedIndex > 0 && cbStudents.SelectedIndex > 0)
+            {
+                filterOnDirections = queries[0].AddCondition($"[group] = N'{cbStudentsGroup.SelectedIndex}' AND direction = N'{cbStudents.SelectedIndex}'");
+                directions = connector.Select(filterOnDirections);
+            }
+            tables[0].DataSource = directions;
+        }
+
+        private void cbStudentsGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataTable groups = new DataTable();
+            string filterOnGroups = "";
+            if (cbStudentsGroup.SelectedIndex == 0 && cbStudents.SelectedIndex == 0)
+                groups = connector.Select(queries[0].ToString());
+            if (cbStudentsGroup.SelectedIndex == 0 && cbStudents.SelectedIndex > 0)
+            {
+                filterOnGroups = queries[0].AddCondition($"direction = N'{cbStudents.SelectedIndex}'");
+                groups = connector.Select(filterOnGroups);
+            }
+            if (cbStudentsGroup.SelectedIndex > 0 && cbStudents.SelectedIndex == 0)
+            {
+                filterOnGroups = queries[0].AddCondition($"[group] = N'{cbStudentsGroup.SelectedIndex}'");
+                groups = connector.Select(filterOnGroups);
+            }
+            if (cbStudentsGroup.SelectedIndex > 0 && cbStudents.SelectedIndex > 0)
+            {
+                filterOnGroups = queries[0].AddCondition($"[group] = N'{cbStudentsGroup.SelectedIndex}' AND direction = N'{cbStudents.SelectedIndex}'");
+                groups = connector.Select(filterOnGroups);
+            }
+            tables[0].DataSource = groups;
+        }
+
+
+        private void dgvDisciplines_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string selectedItem = dgvDisciplines.CurrentRow.Cells[0].Value.ToString();
+            dgvDisciplines.Rows[dgvDisciplines.CurrentCell.RowIndex].DefaultCellStyle.BackColor = Color.Blue;
+            string cmd = TeachersForDiscipline.AddCondition($"discipline = {selectedItem}").ToString();
+            dgvTeachersDiscipline.DataSource = connector.Select(cmd);
+            //dgvTeachersDiscipline.Location = new Point(e.X, e.Y);
+            dgvTeachersDiscipline.Visible = true;
+            if (dgvDisciplines.CurrentRow.Cells[0].Value.ToString() == "") dgvTeachersDiscipline.Visible = false;
+            else dgvTeachersDiscipline.Visible = true;
+        }
+
+        private void dgvTeachers_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //if (dgvTeachers.CurrentCell.RowIndex < dgvTeachers.RowCount)
+            //{
+                string selectedItem = dgvTeachers.CurrentRow.Cells[0].Value.ToString();
+                dgvTeachers.Rows[dgvTeachers.CurrentCell.RowIndex].DefaultCellStyle.BackColor = Color.Blue;
+                string cmd = DisciplinesForTeacher.AddCondition($"teacher = {selectedItem}").ToString();
+                dgvDisciplinesTeacher.Visible = true;
+                dgvDisciplinesTeacher.DataSource = connector.Select(cmd);
+                //dgvDisciplinesTeacher.Location = new Point(e.X, e.Y);
+                dgvDisciplinesTeacher.Visible = true;
+            //}
+        }
+
+        private void dgvDisciplines_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string selectedItem = dgvDisciplines.CurrentRow.Cells[0].Value.ToString();
+            dgvDisciplines.Rows[Convert.ToInt32(selectedItem) - 1].DefaultCellStyle.BackColor = DefaultBackColor;
+        }
+
+        private void dgvTeachers_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string selectedItem = dgvTeachers.CurrentRow.Cells[0].Value.ToString();
+            dgvTeachers.Rows[Convert.ToInt32(selectedItem) - 1].DefaultCellStyle.BackColor = DefaultBackColor;
         }
     }
 }
