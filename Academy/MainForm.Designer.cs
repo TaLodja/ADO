@@ -105,6 +105,7 @@
             this.cbStudentsDirection.Name = "cbStudentsDirection";
             this.cbStudentsDirection.Size = new System.Drawing.Size(306, 21);
             this.cbStudentsDirection.TabIndex = 2;
+            this.cbStudentsDirection.SelectedIndexChanged += new System.EventHandler(this.cbStudentsDirection_SelectedIndexChanged);
             // 
             // dgvStudents
             // 
@@ -138,6 +139,7 @@
             this.cbGroupsDirection.Name = "cbGroupsDirection";
             this.cbGroupsDirection.Size = new System.Drawing.Size(342, 21);
             this.cbGroupsDirection.TabIndex = 1;
+            this.cbGroupsDirection.SelectedIndexChanged += new System.EventHandler(this.cbGroupsDirection_SelectedIndexChanged);
             // 
             // dgvGroups
             // 

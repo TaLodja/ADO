@@ -21,7 +21,7 @@ namespace Academy
         {
             string cmd = $"SELECT {Fields} FROM {Tables}";
             if (Condition != "" && Condition != " ") cmd += $" WHERE {Condition}";
-            cmd += ";";
+            //cmd += ";";
             return cmd;
         }
     }

@@ -38,9 +38,9 @@ namespace Academy
         //Connector movies_connector;
         DataGridView[] tables = null;
         ///////////////////////////////////
-        
+
         Dictionary<string, int> d_directions = null;
-        Dictionary<string, Dictionary<string,int>> d_trees = null;
+        Dictionary<string, Dictionary<string, int>> d_trees = null;
         string[] statusBarSignatures =
         {
             "Количество студетов",
@@ -52,7 +52,7 @@ namespace Academy
         public MainForm()
         {
             InitializeComponent();
-            tables = new DataGridView[] {dgvStudents, dgvGroups, dgvDirections, dgvDisciplines, dgvTeachers};
+            tables = new DataGridView[] { dgvStudents, dgvGroups, dgvDirections, dgvDisciplines, dgvTeachers };
             AllocConsole();
             connector = new Connector("Data Source=DESKTOP-MU2UJAA\\SQLEXPRESS;"
                                         + "Initial Catalog=SPU_411_Import;"
@@ -67,7 +67,7 @@ namespace Academy
             //dgvDirections.DataSource = movies_connector.Select("SELECT * FROM Movies");
             tabControl_SelectedIndexChanged(tabControl, null);
 
-            d_trees = new Dictionary<string, Dictionary<string,int>>();
+            d_trees = new Dictionary<string, Dictionary<string, int>>();
             d_trees.Add(nameof(d_directions), d_directions);
             LoadDataToComboBox(cbGroupsDirection);
             LoadDataToComboBox(cbStudentsGroup);
@@ -78,20 +78,19 @@ namespace Academy
         private static extern bool AllocConsole();
         void LoadDataToComboBox(ComboBox comboBox)
         {
-            string table = comboBox.Name.Substring(Array.FindLastIndex<char>(comboBox.Name.ToCharArray(), Char.IsUpper))+"s";
+            string table = comboBox.Name.Substring(Array.FindLastIndex<char>(comboBox.Name.ToCharArray(), Char.IsUpper)) + "s";
             string dictionary_name = $"d_{table}".ToLower();
             Console.WriteLine("======================================");
             Console.WriteLine(table);
             Console.WriteLine(dictionary_name);
-            Console.WriteLine(nameof(comboBox));
+            Console.WriteLine(nameof(dictionary_name));
             Console.WriteLine("======================================");
             d_trees[dictionary_name] = connector.LoadDictionary(table);
-            foreach(KeyValuePair<string,int> i in d_trees[dictionary_name])
+            foreach (KeyValuePair<string, int> i in d_trees[dictionary_name])
             {
                 comboBox.Items.Add(i.Key);
             }
         }
-
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Console.WriteLine($"{(sender as TabControl).SelectedIndex}\t{tabControl.SelectedTab.Text}");
@@ -104,6 +103,24 @@ namespace Academy
             int i = tabControl.SelectedIndex;
             tables[i].DataSource = connector.Select(queries[i].ToString());
             toolStripStatusLabel.Text = $"{statusBarSignatures[i]}: {tables[i].RowCount - 1}";
+        }
+
+        private void cbGroupsDirection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbGroupsDirection.SelectedIndex != -1)
+                tables[1].DataSource = connector.Select
+                    (
+                    queries[1].ToString() + $" AND direction = {d_trees["d_directions"][cbGroupsDirection.SelectedItem.ToString()]}"
+                    );
+        }
+
+        private void cbStudentsDirection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbStudentsDirection.SelectedIndex != -1)
+                tables[0].DataSource = connector.Select
+                    (
+                    queries[0].ToString() + $" AND direction = {d_trees["d_directions"][cbStudentsDirection.SelectedItem.ToString()]}"
+                    );
         }
     }
 }
