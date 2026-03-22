@@ -34,6 +34,12 @@ namespace Academy
             new Query("Disciplines","*"),
             new Query("Teachers",   "*")
         };
+        Query TeachersAndDiscipline = new Query
+                (
+                "Teachers,TeachersDisciplinesRelation,Disciplines",
+                "*",
+                "teacher_id = teacher AND discipline_id = discipline"
+                );
         Connector connector;
         //Connector movies_connector;
         DataGridView[] tables = null;
@@ -105,6 +111,8 @@ namespace Academy
             int i = tabControl.SelectedIndex;
             tables[i].DataSource = connector.Select(queries[i].ToString());
             toolStripStatusLabel.Text = $"{statusBarSignatures[i]}: {tables[i].RowCount - 1}";
+            if (i == 3) dgvTeachersToDiscipline.Visible = false;
+            if (i == 4) dgvDisciplinesToTeacher.Visible = false;
         }
 
         private void cbGroupsDirection_SelectedIndexChanged(object sender, EventArgs e)
@@ -189,5 +197,42 @@ namespace Academy
         {
             FilterReset();
         }
+
+        void TeachersDisciplineRelation()
+        {
+            string dgvName = $"dgv{tabControl.SelectedTab.Text}";
+            string dgvRelationName =
+                tabControl.SelectedTab.Text == "Disciplines" ?
+                $"dgvTeachersTo{tabControl.SelectedTab.Text.Substring(0, tabControl.SelectedTab.Text.Length - 1)}" :
+                $"dgvDisciplinesTo{tabControl.SelectedTab.Text.Substring(0, tabControl.SelectedTab.Text.Length - 1)}";
+            DataGridView dgv = (DataGridView)tabControl.SelectedTab.Controls[dgvName];
+            DataGridView dgvRelation = (DataGridView)tabControl.SelectedTab.Controls[dgvRelationName];
+            string selectedId = dgv.CurrentRow.Cells[0].Value.ToString();
+            dgv.Rows[dgv.CurrentCell.RowIndex].DefaultCellStyle.BackColor = Color.Blue;
+            string fields =
+                tabControl.SelectedTab.Text == "Disciplines" ?
+                "[Teachers] = FORMATMESSAGE(N'%s %s %s', last_name, first_name, middle_name)" :
+                "discipline_name";
+            string conditions =
+                tabControl.SelectedTab.Text == "Disciplines" ?
+                $"discipline = {selectedId}" :
+                $"teacher = {selectedId}";
+            dgvRelation.DataSource = connector.Select(TeachersAndDiscipline.ChangeQuery("", fields, conditions).ToString());
+            //dgvRelation.Location = new Point(Cursor.Position.X, Cursor.Position.Y);
+            dgvRelation.Visible = true;
+        }
+        private void dgvDisciplines_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            TeachersDisciplineRelation();
+        }
+        private void dgvTeachers_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            TeachersDisciplineRelation();
+        }
+        private void dgvDisciplines_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e) =>
+            dgvDisciplines.Rows[dgvDisciplines.CurrentCell.RowIndex].DefaultCellStyle.BackColor = DefaultBackColor;
+
+        private void dgvTeachers_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e) =>
+            dgvTeachers.Rows[dgvTeachers.CurrentCell.RowIndex].DefaultCellStyle.BackColor = DefaultBackColor;
     }
 }

@@ -27,7 +27,7 @@ namespace Academy
         public Query ChangeQuery(string addTables, string addFields = "", string addCondition = "")
         {
             Query newQuery = new Query(this.Tables, this.Fields, this.Condition);
-            newQuery.Tables += $",{addTables}";
+            if (addTables != "")  newQuery.Tables += $",{addTables}";
             if (addFields != "")
             {
                 if (newQuery.Fields == "*") newQuery.Fields = "";
@@ -35,7 +35,7 @@ namespace Academy
                 newQuery.Fields += $"{addFields}";
             }
             
-            if (newQuery.Condition != "")
+            if (newQuery.Condition != "" && addCondition != "")
                 newQuery.Condition += " AND ";
             if (addCondition != "")
                 newQuery.Condition += $"{addCondition}";
