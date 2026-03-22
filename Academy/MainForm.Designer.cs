@@ -46,6 +46,9 @@
             this.dgvTeachers = new System.Windows.Forms.DataGridView();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.buttonStudentsFilterReset = new System.Windows.Forms.Button();
+            this.buttonGroupsFilterReset = new System.Windows.Forms.Button();
+            this.buttonDisciplinesFilterReset = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabPageStudents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStudents)).BeginInit();
@@ -77,6 +80,7 @@
             // 
             // tabPageStudents
             // 
+            this.tabPageStudents.Controls.Add(this.buttonStudentsFilterReset);
             this.tabPageStudents.Controls.Add(this.cbStudentsGroup);
             this.tabPageStudents.Controls.Add(this.cbStudentsDirection);
             this.tabPageStudents.Controls.Add(this.dgvStudents);
@@ -92,16 +96,17 @@
             // 
             this.cbStudentsGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbStudentsGroup.FormattingEnabled = true;
-            this.cbStudentsGroup.Location = new System.Drawing.Point(65, 6);
+            this.cbStudentsGroup.Location = new System.Drawing.Point(6, 6);
             this.cbStudentsGroup.Name = "cbStudentsGroup";
             this.cbStudentsGroup.Size = new System.Drawing.Size(117, 21);
             this.cbStudentsGroup.TabIndex = 3;
+            this.cbStudentsGroup.SelectedIndexChanged += new System.EventHandler(this.cbStudentsGroup_SelectedIndexChanged);
             // 
             // cbStudentsDirection
             // 
             this.cbStudentsDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbStudentsDirection.FormattingEnabled = true;
-            this.cbStudentsDirection.Location = new System.Drawing.Point(188, 6);
+            this.cbStudentsDirection.Location = new System.Drawing.Point(129, 6);
             this.cbStudentsDirection.Name = "cbStudentsDirection";
             this.cbStudentsDirection.Size = new System.Drawing.Size(306, 21);
             this.cbStudentsDirection.TabIndex = 2;
@@ -121,6 +126,7 @@
             // 
             // tabPageGroups
             // 
+            this.tabPageGroups.Controls.Add(this.buttonGroupsFilterReset);
             this.tabPageGroups.Controls.Add(this.cbGroupsDirection);
             this.tabPageGroups.Controls.Add(this.dgvGroups);
             this.tabPageGroups.Location = new System.Drawing.Point(4, 22);
@@ -137,7 +143,7 @@
             this.cbGroupsDirection.FormattingEnabled = true;
             this.cbGroupsDirection.Location = new System.Drawing.Point(4, 5);
             this.cbGroupsDirection.Name = "cbGroupsDirection";
-            this.cbGroupsDirection.Size = new System.Drawing.Size(342, 21);
+            this.cbGroupsDirection.Size = new System.Drawing.Size(432, 21);
             this.cbGroupsDirection.TabIndex = 1;
             this.cbGroupsDirection.SelectedIndexChanged += new System.EventHandler(this.cbGroupsDirection_SelectedIndexChanged);
             // 
@@ -178,6 +184,7 @@
             // 
             // tabPageDisciplines
             // 
+            this.tabPageDisciplines.Controls.Add(this.buttonDisciplinesFilterReset);
             this.tabPageDisciplines.Controls.Add(this.cbDisciplinesDirection);
             this.tabPageDisciplines.Controls.Add(this.dgvDisciplines);
             this.tabPageDisciplines.Location = new System.Drawing.Point(4, 22);
@@ -194,8 +201,9 @@
             this.cbDisciplinesDirection.FormattingEnabled = true;
             this.cbDisciplinesDirection.Location = new System.Drawing.Point(3, 7);
             this.cbDisciplinesDirection.Name = "cbDisciplinesDirection";
-            this.cbDisciplinesDirection.Size = new System.Drawing.Size(327, 21);
+            this.cbDisciplinesDirection.Size = new System.Drawing.Size(433, 21);
             this.cbDisciplinesDirection.TabIndex = 3;
+            this.cbDisciplinesDirection.SelectedIndexChanged += new System.EventHandler(this.cbDisciplinesDirection_SelectedIndexChanged);
             // 
             // dgvDisciplines
             // 
@@ -248,6 +256,36 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(112, 17);
             this.toolStripStatusLabel.Text = "toolStripStatusLabel";
             // 
+            // buttonStudentsFilterReset
+            // 
+            this.buttonStudentsFilterReset.Location = new System.Drawing.Point(442, 5);
+            this.buttonStudentsFilterReset.Name = "buttonStudentsFilterReset";
+            this.buttonStudentsFilterReset.Size = new System.Drawing.Size(121, 23);
+            this.buttonStudentsFilterReset.TabIndex = 4;
+            this.buttonStudentsFilterReset.Text = "Filter Reset";
+            this.buttonStudentsFilterReset.UseVisualStyleBackColor = true;
+            this.buttonStudentsFilterReset.Click += new System.EventHandler(this.buttonStudentsFilterReset_Click);
+            // 
+            // buttonGroupsFilterReset
+            // 
+            this.buttonGroupsFilterReset.Location = new System.Drawing.Point(442, 6);
+            this.buttonGroupsFilterReset.Name = "buttonGroupsFilterReset";
+            this.buttonGroupsFilterReset.Size = new System.Drawing.Size(121, 23);
+            this.buttonGroupsFilterReset.TabIndex = 5;
+            this.buttonGroupsFilterReset.Text = "Filter Reset";
+            this.buttonGroupsFilterReset.UseVisualStyleBackColor = true;
+            this.buttonGroupsFilterReset.Click += new System.EventHandler(this.buttonGroupsFilterReset_Click);
+            // 
+            // buttonDisciplinesFilterReset
+            // 
+            this.buttonDisciplinesFilterReset.Location = new System.Drawing.Point(442, 6);
+            this.buttonDisciplinesFilterReset.Name = "buttonDisciplinesFilterReset";
+            this.buttonDisciplinesFilterReset.Size = new System.Drawing.Size(121, 23);
+            this.buttonDisciplinesFilterReset.TabIndex = 6;
+            this.buttonDisciplinesFilterReset.Text = "Filter Reset";
+            this.buttonDisciplinesFilterReset.UseVisualStyleBackColor = true;
+            this.buttonDisciplinesFilterReset.Click += new System.EventHandler(this.buttonDisciplinesFilterReset_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,6 +334,9 @@
         private System.Windows.Forms.ComboBox cbStudentsDirection;
         private System.Windows.Forms.ComboBox cbDisciplinesDirection;
         private System.Windows.Forms.ComboBox cbStudentsGroup;
+        private System.Windows.Forms.Button buttonStudentsFilterReset;
+        private System.Windows.Forms.Button buttonGroupsFilterReset;
+        private System.Windows.Forms.Button buttonDisciplinesFilterReset;
     }
 }
 

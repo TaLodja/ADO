@@ -90,7 +90,9 @@ namespace Academy
             {
                 comboBox.Items.Add(i.Key);
             }
+            comboBox.Items.Insert(0, "All");
         }
+
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Console.WriteLine($"{(sender as TabControl).SelectedIndex}\t{tabControl.SelectedTab.Text}");
@@ -107,20 +109,85 @@ namespace Academy
 
         private void cbGroupsDirection_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbGroupsDirection.SelectedIndex != -1)
+            if (cbGroupsDirection.SelectedIndex > 0)
                 tables[1].DataSource = connector.Select
                     (
                     queries[1].ToString() + $" AND direction = {d_trees["d_directions"][cbGroupsDirection.SelectedItem.ToString()]}"
                     );
+            if (cbGroupsDirection.SelectedIndex == 0)
+                tables[1].DataSource = connector.Select(queries[1].ToString());
+            toolStripStatusLabel.Text = $"{statusBarSignatures[1]}: {tables[1].RowCount - 1}";
+        }
+        void cbStudentsFilters()
+        {
+            if (cbStudentsDirection.SelectedIndex > 0 && cbStudentsGroup.SelectedIndex <= 0)
+                tables[0].DataSource = connector.Select
+                    (
+                    queries[0].ToString()
+                    + $" AND direction = {d_trees["d_directions"][cbStudentsDirection.SelectedItem.ToString()]}"
+                    );
+            if (cbStudentsDirection.SelectedIndex == 0 && cbStudentsDirection.SelectedIndex == 0)
+                tables[0].DataSource = connector.Select(queries[0].ToString());
+            if (cbStudentsDirection.SelectedIndex <= 0 && cbStudentsGroup.SelectedIndex > 0)
+                tables[0].DataSource = connector.Select
+                    (
+                    queries[0].ToString()
+                    + $" AND [group] = {d_trees["d_groups"][cbStudentsGroup.SelectedItem.ToString()]}"
+                    );
+            if (cbStudentsDirection.SelectedIndex > 0 && cbStudentsGroup.SelectedIndex > 0)
+                tables[0].DataSource = connector.Select
+                    (
+                    queries[0].ToString()
+                    + $" AND direction = {d_trees["d_directions"][cbStudentsDirection.SelectedItem.ToString()]}"
+                    + $" AND [group] = {d_trees["d_groups"][cbStudentsGroup.SelectedItem.ToString()]}"
+                    );
+            toolStripStatusLabel.Text = $"{statusBarSignatures[0]}: {tables[0].RowCount - 1}";
         }
 
         private void cbStudentsDirection_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbStudentsDirection.SelectedIndex != -1)
-                tables[0].DataSource = connector.Select
+            cbStudentsFilters();
+        }
+
+        private void cbStudentsGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cbStudentsFilters();
+        }
+
+        private void cbDisciplinesDirection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbDisciplinesDirection.SelectedIndex > 0)
+            {
+                tables[3].DataSource = connector.Select
                     (
-                    queries[0].ToString() + $" AND direction = {d_trees["d_directions"][cbStudentsDirection.SelectedItem.ToString()]}"
+                    queries[3].ChangeQuery("DisciplinesDirectionsRelation,Directions", "discipline_id,discipline_name,number_of_lessons", "discipline_id = discipline AND direction = direction_id").ToString()
+                    + $" AND direction = {d_trees["d_directions"][cbDisciplinesDirection.SelectedItem.ToString()]}"
                     );
+            }
+            if (cbDisciplinesDirection.SelectedIndex == 0)
+                tables[3].DataSource = connector.Select(queries[3].ToString());
+            toolStripStatusLabel.Text = $"{statusBarSignatures[3]}: {tables[3].RowCount - 1}";
+        }
+        void FilterReset()
+        {
+            string tabName = tabControl.SelectedTab.Text;
+            (tabControl.SelectedTab.Controls[$"cb{tabName}Direction"] as ComboBox).SelectedIndex = -1;
+            if (tabName == "Students") (tabControl.SelectedTab.Controls[$"cb{tabName}Group"] as ComboBox).SelectedIndex = -1;
+            tabControl_SelectedIndexChanged(tabControl, EventArgs.Empty);
+        }
+        private void buttonStudentsFilterReset_Click(object sender, EventArgs e)
+        {
+            FilterReset();
+        }
+
+        private void buttonGroupsFilterReset_Click(object sender, EventArgs e)
+        {
+            FilterReset();
+        }
+
+        private void buttonDisciplinesFilterReset_Click(object sender, EventArgs e)
+        {
+            FilterReset();
         }
     }
 }
