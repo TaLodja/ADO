@@ -158,13 +158,14 @@ namespace DBtools
         }
         //////////////////////////////////////////////////////////////////
         
-        public Dictionary<string,int> LoadDictionary(string table)
+        public Dictionary<string,int> LoadDictionary(string table, string condition = "")
         {
             Dictionary<string, int> dictionary = new Dictionary<string, int>();
             string prefix = table.ToLower().Substring(0, table.Length - 1);
             string key_name = $"{prefix}_name";
             string value_name = $"{prefix}_id";
             string cmd = $"SELECT {key_name},{value_name} FROM {table}";
+            if (condition != "") cmd += $" WHERE {condition}";
             
             SqlCommand command = new SqlCommand(cmd, connection);
             connection.Open();
