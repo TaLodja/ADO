@@ -78,6 +78,7 @@ namespace DBtools
             command.ExecuteNonQuery();
             connection.Close();
         }
+        public void Insert(string table, string values) => Insert($"INSERT {table} VALUES ({values})");
         public void Insert(string table, string fields, string values) => Insert($"INSERT {table}({fields}) VALUES ({values})");
         public void Update(string cmd)
         {
