@@ -16,6 +16,7 @@ namespace Academy
 {
     public partial class MainForm : Form
     {
+        AddGroup addGroup;
         Query[] queries =
         {
             new Query
@@ -55,6 +56,7 @@ namespace Academy
             "Количество дисциплин",
             "Количество преподавателей"
         };
+        DataGridViewComboBoxCell cbDirections = new DataGridViewComboBoxCell();
         public MainForm()
         {
             InitializeComponent();
@@ -79,6 +81,8 @@ namespace Academy
             LoadDataToComboBox(cbStudentsGroup);
             LoadDataToComboBox(cbStudentsDirection);
             LoadDataToComboBox(cbDisciplinesDirection);
+
+            addGroup = new AddGroup();
         }
         [DllImport("kernel32.dll")]
         private static extern bool AllocConsole();
@@ -234,5 +238,95 @@ namespace Academy
 
         private void dgvTeachers_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e) =>
             dgvTeachers.Rows[dgvTeachers.CurrentCell.RowIndex].DefaultCellStyle.BackColor = DefaultBackColor;
+
+
+        private void dgvGroups_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvGroups.Columns[dgvGroups.CurrentCell.ColumnIndex].Name == "direction_name")
+            {
+                Console.WriteLine("----------------------------------------------");
+                for (int i = 1; i < cbGroupsDirection.Items.Count; i++)
+                {
+                    //cbDirections.DataSource = cbGroupsDirection.Items[i];
+                    cbDirections.Items.Add(cbGroupsDirection.Items[i]);
+                    Console.WriteLine($"{cbGroupsDirection.Items[i]}");
+                }
+                dgvGroups.Rows[dgvGroups.CurrentRow.Index].Cells[dgvGroups.CurrentCell.ColumnIndex] = cbDirections;
+                string selectedValue = cbDirections.Value.ToString();
+                Console.WriteLine($"-------{dgvGroups.Rows[dgvGroups.CurrentRow.Index].Cells[dgvGroups.CurrentCell.ColumnIndex].EditedFormattedValue.ToString()}");
+                Console.WriteLine($"--------------------------------------");
+                //dgvGroups.Rows[dgvGroups.CurrentRow.Index].Cells[dgvGroups.CurrentCell.ColumnIndex].Value = cbDirections.Value;
+            }
+            for (int i = 0; i < dgvGroups.ColumnCount - 1; i++)
+            {
+
+            }
+        }
+
+        private void dgvGroups_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvGroups.Columns[dgvGroups.CurrentCell.ColumnIndex].Name == "direction_name")
+            {
+                //dgvGroups.Rows[dgvGroups.CurrentRow.Index].Cells[dgvGroups.CurrentCell.ColumnIndex].Value = cbDirections.ValueMember;
+                Console.WriteLine($"--------------------------------------");
+                Console.WriteLine($"{cbDirections.Value.ToString()}");
+                Console.WriteLine($"--------------------------------------");
+            }
+            Console.WriteLine($"-------{dgvGroups.Rows[dgvGroups.CurrentRow.Index].Cells[dgvGroups.CurrentCell.ColumnIndex].Value.ToString()}");
+        }
+
+        private void buttonAddGroup_Click(object sender, EventArgs e)
+        {
+            addGroup.ShowDialog();
+        }
+        
+
+
+        //private void cbDirections_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    dgvGroups.Rows[dgvGroups.CurrentRow.Index].Cells[dgvGroups.CurrentCell.ColumnIndex].Value = cbDirections.ToString();
+        //    Console.WriteLine("----------------------------------------------");
+        //    Console.WriteLine($"{dgvGroups.Rows[dgvGroups.CurrentRow.Index].Cells[dgvGroups.CurrentCell.ColumnIndex].Value}");
+        //    Console.WriteLine("----------------------------------------------");
+        //        if (cbDirections.Selected == true)
+        //        {
+
+        //        }
+        //}
+
+
+
+        //private void dgvStudents_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        //{
+        //    string[] values = new string[] { };
+        //        for (int i = 0; i < dgvStudents.ColumnCount; i++)
+        //        {
+        //            values[i] = dgvStudents.CurrentRow.Cells[i].Value.ToString();
+        //            Console.WriteLine(values[i]);
+        //        }
+        //}
+        //private void dgvStudents_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.KeyValue == (char)Keys.Enter)
+        //    {
+        //        string[] values = new string[] { };
+        //        for (int i = 0; i < dgvStudents.ColumnCount; i++)
+        //        {
+        //            values[i] = dgvStudents.CurrentRow.Cells[i].Value.ToString();
+        //            Console.WriteLine(values[i]);
+        //        }
+        //    }
+        //}
+
+
+        //private void dgvStudents_Enter(object sender, EventArgs e)
+        //{
+        //    string[] values = new string[] { };
+        //    for (int i = 0; i < dgvStudents.ColumnCount; i++)
+        //    {
+        //        values[i] = dgvStudents.CurrentRow.Cells[i].Value.ToString();
+        //        Console.WriteLine(values[i]);
+        //    }
+        //}
     }
 }

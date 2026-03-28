@@ -36,6 +36,7 @@
             this.cbStudentsDirection = new System.Windows.Forms.ComboBox();
             this.dgvStudents = new System.Windows.Forms.DataGridView();
             this.tabPageGroups = new System.Windows.Forms.TabPage();
+            this.buttonAddGroup = new System.Windows.Forms.Button();
             this.buttonGroupsFilterReset = new System.Windows.Forms.Button();
             this.cbGroupsDirection = new System.Windows.Forms.ComboBox();
             this.dgvGroups = new System.Windows.Forms.DataGridView();
@@ -140,6 +141,7 @@
             // 
             // tabPageGroups
             // 
+            this.tabPageGroups.Controls.Add(this.buttonAddGroup);
             this.tabPageGroups.Controls.Add(this.buttonGroupsFilterReset);
             this.tabPageGroups.Controls.Add(this.cbGroupsDirection);
             this.tabPageGroups.Controls.Add(this.dgvGroups);
@@ -151,11 +153,21 @@
             this.tabPageGroups.Text = "Groups";
             this.tabPageGroups.UseVisualStyleBackColor = true;
             // 
+            // buttonAddGroup
+            // 
+            this.buttonAddGroup.Location = new System.Drawing.Point(733, 6);
+            this.buttonAddGroup.Name = "buttonAddGroup";
+            this.buttonAddGroup.Size = new System.Drawing.Size(81, 23);
+            this.buttonAddGroup.TabIndex = 7;
+            this.buttonAddGroup.Text = "Add Group";
+            this.buttonAddGroup.UseVisualStyleBackColor = true;
+            this.buttonAddGroup.Click += new System.EventHandler(this.buttonAddGroup_Click);
+            // 
             // buttonGroupsFilterReset
             // 
-            this.buttonGroupsFilterReset.Location = new System.Drawing.Point(698, 6);
+            this.buttonGroupsFilterReset.Location = new System.Drawing.Point(549, 6);
             this.buttonGroupsFilterReset.Name = "buttonGroupsFilterReset";
-            this.buttonGroupsFilterReset.Size = new System.Drawing.Size(121, 23);
+            this.buttonGroupsFilterReset.Size = new System.Drawing.Size(81, 23);
             this.buttonGroupsFilterReset.TabIndex = 5;
             this.buttonGroupsFilterReset.Text = "Filter Reset";
             this.buttonGroupsFilterReset.UseVisualStyleBackColor = true;
@@ -167,12 +179,13 @@
             this.cbGroupsDirection.FormattingEnabled = true;
             this.cbGroupsDirection.Location = new System.Drawing.Point(4, 6);
             this.cbGroupsDirection.Name = "cbGroupsDirection";
-            this.cbGroupsDirection.Size = new System.Drawing.Size(648, 21);
+            this.cbGroupsDirection.Size = new System.Drawing.Size(539, 21);
             this.cbGroupsDirection.TabIndex = 1;
             this.cbGroupsDirection.SelectedIndexChanged += new System.EventHandler(this.cbGroupsDirection_SelectedIndexChanged);
             // 
             // dgvGroups
             // 
+            this.dgvGroups.AllowUserToAddRows = false;
             this.dgvGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -180,8 +193,10 @@
             this.dgvGroups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvGroups.Location = new System.Drawing.Point(4, 32);
             this.dgvGroups.Name = "dgvGroups";
-            this.dgvGroups.Size = new System.Drawing.Size(815, 523);
+            this.dgvGroups.Size = new System.Drawing.Size(815, 493);
             this.dgvGroups.TabIndex = 0;
+            this.dgvGroups.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGroups_CellEnter);
+            this.dgvGroups.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGroups_CellLeave);
             // 
             // tabPageDirections
             // 
@@ -362,7 +377,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.DataGridView dgvDirections;
         private System.Windows.Forms.DataGridView dgvStudents;
-        private System.Windows.Forms.DataGridView dgvGroups;
         private System.Windows.Forms.DataGridView dgvDisciplines;
         private System.Windows.Forms.DataGridView dgvTeachers;
         private System.Windows.Forms.ComboBox cbGroupsDirection;
@@ -374,6 +388,8 @@
         private System.Windows.Forms.Button buttonDisciplinesFilterReset;
         private System.Windows.Forms.DataGridView dgvTeachersToDiscipline;
         private System.Windows.Forms.DataGridView dgvDisciplinesToTeacher;
+        private System.Windows.Forms.DataGridView dgvGroups;
+        private System.Windows.Forms.Button buttonAddGroup;
     }
 }
 
