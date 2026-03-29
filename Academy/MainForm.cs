@@ -22,7 +22,7 @@ namespace Academy
             new Query
                 (
                 "Students,Groups,Directions",
-                "[Student] = FORMATMESSAGE(N'%s %s %s',last_name,first_name,middle_name),group_name,direction_name",
+                "[Student] = FORMATMESSAGE(N'%s %s %s',last_name,first_name,middle_name),birth_date,group_name,direction_name",
                 "[group]=group_id AND direction=direction_id"
                 ),
             new Query
