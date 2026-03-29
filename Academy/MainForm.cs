@@ -78,7 +78,7 @@ namespace Academy
         }
         [DllImport("kernel32.dll")]
         private static extern bool AllocConsole();
-        void LoadDataToComboBox(ComboBox comboBox)
+        public void LoadDataToComboBox(ComboBox comboBox)
         {
             string table = comboBox.Name.Substring(Array.FindLastIndex<char>(comboBox.Name.ToCharArray(), Char.IsUpper)) + "s";
             string dictionary_name = $"d_{table}".ToLower();
@@ -133,7 +133,7 @@ namespace Academy
 
         private void buttonAddStudent_Click(object sender, EventArgs e)
         {
-            StudentForm form = new StudentForm();
+            StudentForm form = new StudentForm(this);
             form.ShowDialog();
         }
 

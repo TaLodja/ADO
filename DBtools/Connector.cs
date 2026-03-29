@@ -65,19 +65,6 @@ namespace DBtools
             string[] values = parts[1].Split('(', ')');
             return values[1].Trim();
         }
-        public string check_exist(string cmd)
-        {
-            string check_condition = "";
-            string[] s_fields = GetFieldsFromInsert(cmd).Split(',');
-            string[] s_values = GetValuesFromInsert(cmd).Split(',');
-            for (int i = 0; i < s_values.Length; i++)
-            {
-                if (i != 0) check_condition += " AND ";
-                check_condition += $"{s_fields[i].Trim()} = {s_values[i].Trim()}";
-            }
-            string check_cmd = $"IF NOT EXISTS ({Select("*", GetTableFromInsert(cmd), check_condition)})";
-            return check_cmd;
-        }
         public void Insert(string cmd)
         {
             Console.WriteLine(cmd);
@@ -86,7 +73,6 @@ namespace DBtools
             Console.WriteLine(GetValuesFromInsert(cmd));
             if (GetPrimaryKey(GetTableFromInsert(cmd), GetFieldsFromInsert(cmd), GetValuesFromInsert(cmd)) != null)
                 return;
-            cmd = $"{check_exist(cmd)} {cmd}";
             connection.Open();
             SqlCommand command = new SqlCommand(cmd, connection);
             command.ExecuteNonQuery();

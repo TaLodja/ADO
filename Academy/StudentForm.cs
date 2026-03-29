@@ -14,12 +14,14 @@ namespace Academy
 {
     public partial class StudentForm : HumanForm
     {
-        public StudentForm()
+        private MainForm mainForm;
+        public StudentForm(MainForm fromForm)
         {
             InitializeComponent();
             //rtbLastName.Text = "Тупенко";
             //rtbFirstName.Text = "Василий";
             //rtbMiddleName.Text = "Петрович";
+            fromForm.LoadDataToComboBox(cbStudentsGroup);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -29,7 +31,7 @@ namespace Academy
             //connector.Insert($"INSERT Students(last_name,first_name,middle_name,birth_date,[group])"
             //    + $" VALUES (N'{rtbLastName.Text}',N'{rtbFirstName.Text}',N'{rtbMiddleName.Text}',N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}',{1})");
             connector.Insert("Students", "last_name,first_name,middle_name,birth_date,[group]",
-                $"N'{rtbLastName.Text}',N'{rtbFirstName.Text}',N'{rtbMiddleName.Text}',N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}',{1}");
+                $"N'{rtbLastName.Text}',N'{rtbFirstName.Text}',N'{rtbMiddleName.Text}',N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}',{cbStudentsGroup.SelectedIndex+1}");
         }
     }
 }
