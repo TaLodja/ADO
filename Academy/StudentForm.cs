@@ -18,7 +18,6 @@ namespace Academy
         Connector connector = new Connector(ConfigurationManager.ConnectionStrings["SPU_411_Import"].ConnectionString);
         string current_photo_path = "";
         string cmd = "";
-        //OpenFileDialog openFileDialog;
         public StudentForm(MainForm fromForm)
         {
             InitializeComponent();
@@ -45,12 +44,6 @@ namespace Academy
                 ByteArrayToImage(photo);
                 current_photo_path = photoPath;
             }
-            //openFileDialog = 
-            //if (pictureBoxPhoto.Image != null)
-            //{
-            //    string 
-            //}
-
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -66,13 +59,8 @@ namespace Academy
                 + $",N'{rtbMiddleName.Text}'"
                 + $",N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}'"
                 + $",{cbStudentsGroup.SelectedIndex + 1}"
-                //+ $",{GetPhoto(photoPath) as SqlDbType.Image}"
                 );
-            //cmd = $"SELECT photo FROM Students WHERE last_name=N'{rtbLastName.Text}' AND first_name=N'{rtbFirstName.Text}' AND middle_name=N'{rtbMiddleName.Text}' AND birth_date=N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}'";
             string photo_condition = $"last_name=N'{rtbLastName.Text}' AND first_name=N'{rtbFirstName.Text}' AND middle_name=N'{rtbMiddleName.Text}' AND birth_date=N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}'";
-                //+ $"AND birth_date=N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}'"
-                ;
-            //Console.WriteLine($"{connector.Scalar($"SELECT photo FROM Students WHERE last_name=N'{rtbLastName.Text}'")}");
             if (pictureBoxPhoto.Image != null && (connector.Scalar($"SELECT photo FROM Students WHERE {photo_condition}").ToString() == "" || current_photo_path != photoPath))
                 connector.Update($"UPDATE Students SET photo = (SELECT BulkColumn FROM OPENROWSET(BULK N'{photoPath}', SINGLE_BLOB) AS image) WHERE {photo_condition}");
         }
