@@ -228,7 +228,6 @@
         #endregion
 
         private System.Windows.Forms.Label labelLastName;
-        private System.Windows.Forms.Label labelID;
         private System.Windows.Forms.Label labelFirstName;
         private System.Windows.Forms.Label labelMiddleName;
         private System.Windows.Forms.Label labelBirthDate;
@@ -242,5 +241,6 @@
         private System.Windows.Forms.Label labelEmail;
         protected System.Windows.Forms.RichTextBox rtbPhone;
         private System.Windows.Forms.Label label1;
+        protected System.Windows.Forms.Label labelID;
     }
 }

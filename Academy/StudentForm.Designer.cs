@@ -36,9 +36,17 @@ namespace Academy
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
             this.SuspendLayout();
             // 
+            // pictureBoxPhoto
+            // 
+            this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            // 
             // buttonPhoto
             // 
             this.buttonPhoto.Location = new System.Drawing.Point(397, 281);
+            // 
+            // labelID
+            // 
+            this.labelID.Location = new System.Drawing.Point(137, 335);
             // 
             // labelGroup
             // 
@@ -93,6 +101,7 @@ namespace Academy
             this.Controls.Add(this.labelGroup);
             this.Name = "StudentForm";
             this.Text = "Student";
+            this.Controls.SetChildIndex(this.labelID, 0);
             this.Controls.SetChildIndex(this.rtbLastName, 0);
             this.Controls.SetChildIndex(this.rtbFirstName, 0);
             this.Controls.SetChildIndex(this.rtbMiddleName, 0);

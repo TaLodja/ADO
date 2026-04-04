@@ -26,12 +26,24 @@ namespace Academy
             cbStudentsGroup.ValueMember = "group_id";
 
         }
-
+        public StudentForm(int id) : this()
+        {
+            DataTable data = DataBase.Connector.Select("*", "Students", $"stud_id={id}");
+            labelID.Text = $"ID: {id}";
+            rtbLastName.Text = data.Rows[0]["last_name"].ToString();
+            rtbFirstName.Text = data.Rows[0]["first_name"].ToString();
+            rtbMiddleName.Text = data.Rows[0]["middle_name"].ToString();
+            dtpBirthDate.Value = Convert.ToDateTime(data.Rows[0]["birth_date"].ToString());
+            rtbEmail.Text = data.Rows[0]["email"].ToString();
+            rtbPhone.Text = data.Rows[0]["phone"].ToString();
+            cbStudentsGroup.SelectedValue = Convert.ToInt32(data.Rows[0]["group"].ToString());
+            pictureBoxPhoto.Image = DataBase.Connector.DownloadPhoto(id, "Students", "photo");
+        }
         private void buttonOK_Click(object sender, EventArgs e)
         {
             Academy.Models.Student student = new Models.Student
                 (
-                0,
+                Convert.ToInt32(labelID.Text.Split(':').Last()),
                 rtbLastName.Text,
                 rtbFirstName.Text,
                 rtbMiddleName.Text,
@@ -41,9 +53,20 @@ namespace Academy
                 pictureBoxPhoto.Image,
                 Convert.ToInt32(cbStudentsGroup.SelectedValue)
                 );
-            DataBase.Connector.Insert($"INSERT Students({student.GetNames()}) VALUES ({student})");
-           //DBtools.Connector connector = new DBtools  //create class DataBase
-           //     .Connector(ConfigurationManager.ConnectionStrings["SPU_411_Import"].ConnectionString);
+            if (student.id == 0)
+            {
+                DataBase.Connector.Insert($"INSERT Students({student.GetNames()}) VALUES ({student})");
+                student.id = (int)DataBase.Connector.Scalar($"SELECT stud_id FROM Students WHERE {student.GetCondition()}");
+            }
+            else
+            {
+                DataBase.Connector.Update($"UPDATE Students SET {student.ToStringUpdate()} WHERE stud_id={student.id}");
+            }
+            if (student.photo != null)
+                DataBase.Connector.UploadPhoto(student.SerializePhoto(), student.id, "photo", "Students");
+
+            //DBtools.Connector connector = new DBtools  //create class DataBase
+            //     .Connector(ConfigurationManager.ConnectionStrings["SPU_411_Import"].ConnectionString);
             //connector.Insert($"INSERT Students(last_name,first_name,middle_name,birth_date,[group])"
             //    + $" VALUES (N'{rtbLastName.Text}',N'{rtbFirstName.Text}',N'{rtbMiddleName.Text}',N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}',{1})");
             //DataBase.Connector.Insert("Students", "last_name,first_name,middle_name,birth_date,[group]",
