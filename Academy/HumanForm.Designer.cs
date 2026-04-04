@@ -39,6 +39,10 @@
             this.dtpBirthDate = new System.Windows.Forms.DateTimePicker();
             this.pictureBoxPhoto = new System.Windows.Forms.PictureBox();
             this.buttonPhoto = new System.Windows.Forms.Button();
+            this.rtbEmail = new System.Windows.Forms.RichTextBox();
+            this.labelEmail = new System.Windows.Forms.Label();
+            this.rtbPhone = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,7 +90,7 @@
             // 
             this.labelBirthDate.AutoSize = true;
             this.labelBirthDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelBirthDate.Location = new System.Drawing.Point(15, 163);
+            this.labelBirthDate.Location = new System.Drawing.Point(7, 163);
             this.labelBirthDate.Name = "labelBirthDate";
             this.labelBirthDate.Size = new System.Drawing.Size(155, 24);
             this.labelBirthDate.TabIndex = 4;
@@ -136,25 +140,71 @@
             // 
             this.pictureBoxPhoto.Location = new System.Drawing.Point(397, 13);
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
-            this.pictureBoxPhoto.Size = new System.Drawing.Size(143, 179);
+            this.pictureBoxPhoto.Size = new System.Drawing.Size(167, 255);
+            this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxPhoto.TabIndex = 10;
             this.pictureBoxPhoto.TabStop = false;
             // 
             // buttonPhoto
             // 
             this.buttonPhoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonPhoto.Location = new System.Drawing.Point(397, 205);
+            this.buttonPhoto.Location = new System.Drawing.Point(397, 286);
             this.buttonPhoto.Name = "buttonPhoto";
-            this.buttonPhoto.Size = new System.Drawing.Size(143, 34);
+            this.buttonPhoto.Size = new System.Drawing.Size(167, 34);
             this.buttonPhoto.TabIndex = 11;
             this.buttonPhoto.Text = "Обзор";
             this.buttonPhoto.UseVisualStyleBackColor = true;
+            this.buttonPhoto.Click += new System.EventHandler(this.buttonPhoto_Click);
+            // 
+            // rtbEmail
+            // 
+            this.rtbEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbEmail.Location = new System.Drawing.Point(174, 198);
+            this.rtbEmail.Multiline = false;
+            this.rtbEmail.Name = "rtbEmail";
+            this.rtbEmail.Size = new System.Drawing.Size(211, 34);
+            this.rtbEmail.TabIndex = 13;
+            this.rtbEmail.Text = "";
+            // 
+            // labelEmail
+            // 
+            this.labelEmail.AutoSize = true;
+            this.labelEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelEmail.Location = new System.Drawing.Point(100, 198);
+            this.labelEmail.Name = "labelEmail";
+            this.labelEmail.Size = new System.Drawing.Size(62, 24);
+            this.labelEmail.TabIndex = 12;
+            this.labelEmail.Text = "Email:";
+            // 
+            // rtbPhone
+            // 
+            this.rtbPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rtbPhone.Location = new System.Drawing.Point(174, 238);
+            this.rtbPhone.Multiline = false;
+            this.rtbPhone.Name = "rtbPhone";
+            this.rtbPhone.Size = new System.Drawing.Size(211, 34);
+            this.rtbPhone.TabIndex = 15;
+            this.rtbPhone.Text = "";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(67, 238);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(95, 24);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Телефон:";
             // 
             // HumanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(554, 250);
+            this.ClientSize = new System.Drawing.Size(578, 335);
+            this.Controls.Add(this.rtbPhone);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.rtbEmail);
+            this.Controls.Add(this.labelEmail);
             this.Controls.Add(this.buttonPhoto);
             this.Controls.Add(this.pictureBoxPhoto);
             this.Controls.Add(this.dtpBirthDate);
@@ -188,5 +238,9 @@
         protected System.Windows.Forms.RichTextBox rtbFirstName;
         protected System.Windows.Forms.RichTextBox rtbMiddleName;
         protected System.Windows.Forms.DateTimePicker dtpBirthDate;
+        protected System.Windows.Forms.RichTextBox rtbEmail;
+        private System.Windows.Forms.Label labelEmail;
+        protected System.Windows.Forms.RichTextBox rtbPhone;
+        private System.Windows.Forms.Label label1;
     }
 }

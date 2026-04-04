@@ -1,4 +1,5 @@
-﻿namespace Academy
+﻿
+namespace Academy
 {
     partial class StudentForm
     {
@@ -37,13 +38,13 @@
             // 
             // buttonPhoto
             // 
-            this.buttonPhoto.Location = new System.Drawing.Point(397, 203);
+            this.buttonPhoto.Location = new System.Drawing.Point(397, 281);
             // 
             // labelGroup
             // 
             this.labelGroup.AutoSize = true;
             this.labelGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelGroup.Location = new System.Drawing.Point(92, 203);
+            this.labelGroup.Location = new System.Drawing.Point(92, 281);
             this.labelGroup.Name = "labelGroup";
             this.labelGroup.Size = new System.Drawing.Size(78, 24);
             this.labelGroup.TabIndex = 14;
@@ -53,7 +54,7 @@
             // 
             this.cbStudentsGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cbStudentsGroup.FormattingEnabled = true;
-            this.cbStudentsGroup.Location = new System.Drawing.Point(174, 203);
+            this.cbStudentsGroup.Location = new System.Drawing.Point(174, 281);
             this.cbStudentsGroup.Name = "cbStudentsGroup";
             this.cbStudentsGroup.Size = new System.Drawing.Size(211, 32);
             this.cbStudentsGroup.TabIndex = 15;
@@ -62,9 +63,9 @@
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonOK.Location = new System.Drawing.Point(249, 251);
+            this.buttonOK.Location = new System.Drawing.Point(234, 329);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(136, 35);
+            this.buttonOK.Size = new System.Drawing.Size(151, 35);
             this.buttonOK.TabIndex = 16;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -74,9 +75,9 @@
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCancel.Location = new System.Drawing.Point(397, 251);
+            this.buttonCancel.Location = new System.Drawing.Point(397, 329);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(143, 35);
+            this.buttonCancel.Size = new System.Drawing.Size(167, 35);
             this.buttonCancel.TabIndex = 17;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -85,13 +86,19 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(554, 298);
+            this.ClientSize = new System.Drawing.Size(574, 372);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.cbStudentsGroup);
             this.Controls.Add(this.labelGroup);
             this.Name = "StudentForm";
             this.Text = "Student";
+            this.Controls.SetChildIndex(this.rtbLastName, 0);
+            this.Controls.SetChildIndex(this.rtbFirstName, 0);
+            this.Controls.SetChildIndex(this.rtbMiddleName, 0);
+            this.Controls.SetChildIndex(this.dtpBirthDate, 0);
+            this.Controls.SetChildIndex(this.rtbEmail, 0);
+            this.Controls.SetChildIndex(this.rtbPhone, 0);
             this.Controls.SetChildIndex(this.labelGroup, 0);
             this.Controls.SetChildIndex(this.cbStudentsGroup, 0);
             this.Controls.SetChildIndex(this.pictureBoxPhoto, 0);
