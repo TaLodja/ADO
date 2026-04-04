@@ -33,7 +33,8 @@ namespace Academy
                 ),
             new Query("Directions", "*"),
             new Query("Disciplines","*"),
-            new Query("Teachers",   "*")
+            new Query("Teachers",
+                "last_name,first_name,middle_name,birth_date,work_since")
         };
         Query TeachersAndDiscipline = new Query
                 (
@@ -145,7 +146,7 @@ namespace Academy
 
         private void buttonAddTeacher_Click(object sender, EventArgs e)
         {
-            TeacherForm form = new TeacherForm();
+            TeacherForm form = new TeacherForm(this);
             form.ShowDialog();
         }
 
@@ -157,6 +158,17 @@ namespace Academy
             string birth_date = dgvStudents.CurrentRow.Cells[3].Value.ToString();
             string group = dgvStudents.CurrentRow.Cells[4].Value.ToString();
             StudentForm form = new StudentForm(this,last_name, first_name, middle_name, birth_date, group);
+            form.ShowDialog();
+        }
+
+        private void dgvTeachers_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string last_name = dgvTeachers.CurrentRow.Cells[0].Value.ToString();
+            string first_name = dgvTeachers.CurrentRow.Cells[1].Value.ToString();
+            string middle_name = dgvTeachers.CurrentRow.Cells[2].Value.ToString();
+            string birth_date = dgvTeachers.CurrentRow.Cells[3].Value.ToString();
+            string work_since = dgvTeachers.CurrentRow.Cells[4].Value.ToString();
+            TeacherForm form = new TeacherForm(this, last_name, first_name, middle_name, birth_date, work_since);
             form.ShowDialog();
         }
     }
