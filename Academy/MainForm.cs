@@ -22,7 +22,7 @@ namespace Academy
             new Query
                 (
                 "Students,Groups,Directions",
-                "[Student] = FORMATMESSAGE(N'%s %s %s',last_name,first_name,middle_name),birth_date,group_name,direction_name",
+                "last_name,first_name,middle_name,birth_date,group_name,direction_name",
                 "[group]=group_id AND direction=direction_id"
                 ),
             new Query
@@ -122,13 +122,13 @@ namespace Academy
             cbStudentsGroup.Items.AddRange(d_trees["d_groups"].Keys.ToArray());
             dgvStudents.DataSource = connector.
                 Select(queries[0].ToString() + $" AND direction={d_trees["d_directions"][cbStudentsDirection.SelectedItem.ToString()]}");
-            toolStripStatusLabel.Text = $"{statusBarSignatures[0]}: {dgvStudents.RowCount-1}";
+            toolStripStatusLabel.Text = $"{statusBarSignatures[0]}: {dgvStudents.RowCount - 1}";
         }
         private void cbStudentsGroup_SelectedIndexChanged(object sender, EventArgs e)
         {
             dgvStudents.DataSource = connector.
                 Select(queries[0].ToString() + $" AND [group]={d_trees["d_groups"][cbStudentsGroup.SelectedItem.ToString()]}");
-            toolStripStatusLabel.Text = $"{statusBarSignatures[0]}: {dgvStudents.RowCount-1}";
+            toolStripStatusLabel.Text = $"{statusBarSignatures[0]}: {dgvStudents.RowCount - 1}";
         }
 
         private void buttonAddStudent_Click(object sender, EventArgs e)
@@ -140,6 +140,17 @@ namespace Academy
         private void buttonAddTeacher_Click(object sender, EventArgs e)
         {
             TeacherForm form = new TeacherForm();
+            form.ShowDialog();
+        }
+
+        private void dgvStudents_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string last_name = dgvStudents.CurrentRow.Cells[0].Value.ToString();
+            string first_name = dgvStudents.CurrentRow.Cells[1].Value.ToString();
+            string middle_name = dgvStudents.CurrentRow.Cells[2].Value.ToString();
+            string birth_date = dgvStudents.CurrentRow.Cells[3].Value.ToString();
+            string group = dgvStudents.CurrentRow.Cells[4].Value.ToString();
+            StudentForm form = new StudentForm(this,last_name, first_name, middle_name, birth_date, group);
             form.ShowDialog();
         }
     }

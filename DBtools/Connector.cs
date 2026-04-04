@@ -111,6 +111,14 @@ namespace DBtools
             connection.Close();
             return value;
         }
+        public byte[] PhotoFromDB(string cmd)
+        {
+            SqlCommand command = new SqlCommand (cmd, connection);
+            connection.Open();
+            byte[] bytes = (byte[])command.ExecuteScalar();
+            connection.Close();
+            return bytes;
+        }
         public string GetPrimaryKeyColumn(string table)
         {
             return (string)Scalar

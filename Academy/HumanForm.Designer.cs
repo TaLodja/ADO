@@ -39,6 +39,7 @@
             this.dtpBirthDate = new System.Windows.Forms.DateTimePicker();
             this.pictureBoxPhoto = new System.Windows.Forms.PictureBox();
             this.buttonPhoto = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
             this.SuspendLayout();
             // 
@@ -137,6 +138,7 @@
             this.pictureBoxPhoto.Location = new System.Drawing.Point(397, 13);
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
             this.pictureBoxPhoto.Size = new System.Drawing.Size(143, 179);
+            this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxPhoto.TabIndex = 10;
             this.pictureBoxPhoto.TabStop = false;
             // 
@@ -149,6 +151,11 @@
             this.buttonPhoto.TabIndex = 11;
             this.buttonPhoto.Text = "Обзор";
             this.buttonPhoto.UseVisualStyleBackColor = true;
+            this.buttonPhoto.Click += new System.EventHandler(this.buttonPhoto_Click);
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog";
             // 
             // HumanForm
             // 
@@ -188,5 +195,6 @@
         protected System.Windows.Forms.RichTextBox rtbFirstName;
         protected System.Windows.Forms.RichTextBox rtbMiddleName;
         protected System.Windows.Forms.DateTimePicker dtpBirthDate;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }

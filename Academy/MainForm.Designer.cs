@@ -44,10 +44,10 @@
             this.cbDisciplinesDirection = new System.Windows.Forms.ComboBox();
             this.dgvDisciplines = new System.Windows.Forms.DataGridView();
             this.tabPageTeachers = new System.Windows.Forms.TabPage();
+            this.buttonAddTeacher = new System.Windows.Forms.Button();
             this.dgvTeachers = new System.Windows.Forms.DataGridView();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.buttonAddTeacher = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabPageStudents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStudents)).BeginInit();
@@ -132,6 +132,7 @@
             this.dgvStudents.Name = "dgvStudents";
             this.dgvStudents.Size = new System.Drawing.Size(560, 303);
             this.dgvStudents.TabIndex = 0;
+            this.dgvStudents.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvStudents_CellMouseClick);
             // 
             // tabPageGroups
             // 
@@ -235,6 +236,16 @@
             this.tabPageTeachers.Text = "Teachers";
             this.tabPageTeachers.UseVisualStyleBackColor = true;
             // 
+            // buttonAddTeacher
+            // 
+            this.buttonAddTeacher.Location = new System.Drawing.Point(456, 2);
+            this.buttonAddTeacher.Name = "buttonAddTeacher";
+            this.buttonAddTeacher.Size = new System.Drawing.Size(102, 23);
+            this.buttonAddTeacher.TabIndex = 1;
+            this.buttonAddTeacher.Text = "Добавить";
+            this.buttonAddTeacher.UseVisualStyleBackColor = true;
+            this.buttonAddTeacher.Click += new System.EventHandler(this.buttonAddTeacher_Click);
+            // 
             // dgvTeachers
             // 
             this.dgvTeachers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -262,16 +273,6 @@
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(112, 17);
             this.toolStripStatusLabel.Text = "toolStripStatusLabel";
-            // 
-            // buttonAddTeacher
-            // 
-            this.buttonAddTeacher.Location = new System.Drawing.Point(456, 2);
-            this.buttonAddTeacher.Name = "buttonAddTeacher";
-            this.buttonAddTeacher.Size = new System.Drawing.Size(102, 23);
-            this.buttonAddTeacher.TabIndex = 1;
-            this.buttonAddTeacher.Text = "Добавить";
-            this.buttonAddTeacher.UseVisualStyleBackColor = true;
-            this.buttonAddTeacher.Click += new System.EventHandler(this.buttonAddTeacher_Click);
             // 
             // MainForm
             // 
