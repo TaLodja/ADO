@@ -17,6 +17,7 @@ namespace Academy
     {
         Connector connector = new Connector(ConfigurationManager.ConnectionStrings["SPU_411_Import"].ConnectionString);
         string current_photo_path = "";
+        string cmd = "";
         //OpenFileDialog openFileDialog;
         public StudentForm(MainForm fromForm)
         {
@@ -36,13 +37,13 @@ namespace Academy
             dtpBirthDate.Value = DateTime.Parse(birth_date);
             fromForm.LoadDataToComboBox(cbStudentsGroup);
             cbStudentsGroup.Text = group;
-            //cbStudentsGroup.SelectedIndex = cbStudentsGroup.Items.IndexOf(group);
-            string photo_value = connector.Scalar($"SELECT photo FROM Students WHERE last_name=N'{last_name}'").ToString();
+            cmd = $"SELECT photo FROM Students WHERE last_name=N'{rtbLastName.Text}' AND first_name=N'{rtbFirstName.Text}' AND middle_name=N'{rtbMiddleName.Text}' AND birth_date=N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}'";
+            string photo_value = connector.Scalar(cmd).ToString();
             if (photo_value != "")
             {
-                byte[] photo = connector.PhotoFromDB($"SELECT photo FROM Students WHERE last_name=N'{last_name}'");
+                byte[] photo = connector.PhotoFromDB(cmd);
                 ByteArrayToImage(photo);
-                current_photo_path = photoPath; 
+                current_photo_path = photoPath;
             }
             //openFileDialog = 
             //if (pictureBoxPhoto.Image != null)
@@ -67,7 +68,8 @@ namespace Academy
                 + $",{cbStudentsGroup.SelectedIndex + 1}"
                 //+ $",{GetPhoto(photoPath) as SqlDbType.Image}"
                 );
-            string photo_condition = $"last_name=N'{rtbLastName.Text}' AND first_name=N'{rtbFirstName.Text}' AND middle_name=N'{rtbMiddleName.Text}'"
+            //cmd = $"SELECT photo FROM Students WHERE last_name=N'{rtbLastName.Text}' AND first_name=N'{rtbFirstName.Text}' AND middle_name=N'{rtbMiddleName.Text}' AND birth_date=N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}'";
+            string photo_condition = $"last_name=N'{rtbLastName.Text}' AND first_name=N'{rtbFirstName.Text}' AND middle_name=N'{rtbMiddleName.Text}' AND birth_date=N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}'";
                 //+ $"AND birth_date=N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}'"
                 ;
             //Console.WriteLine($"{connector.Scalar($"SELECT photo FROM Students WHERE last_name=N'{rtbLastName.Text}'")}");
