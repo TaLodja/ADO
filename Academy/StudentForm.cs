@@ -41,9 +41,10 @@ namespace Academy
         }
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            int id = labelID.Text.Split(':').Last() == "" ? 0 : Convert.ToInt32(labelID.Text.Split(':').Last());
             Academy.Models.Student student = new Models.Student
                 (
-                Convert.ToInt32(labelID.Text.Split(':').Last()),
+                id,
                 rtbLastName.Text,
                 rtbFirstName.Text,
                 rtbMiddleName.Text,
