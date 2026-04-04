@@ -15,7 +15,6 @@ namespace Academy
     public partial class HumanForm : Form
     {
         public string photoPath { get; set; }
-        //public byte[] photo { get; set; }
         public HumanForm()
         {
             InitializeComponent();
@@ -28,13 +27,7 @@ namespace Academy
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 pictureBoxPhoto.Image = Image.FromFile(openFileDialog.FileName);
-                //photo = GetPhoto(openFileDialog.FileName);
                 photoPath = openFileDialog.FileName;
-                //string directoryName = Path.GetDirectoryName(filePath);
-                //if (directoryName.Contains("Students"))
-                //{
-                //    
-                //}
             }
         }
         public byte[] GetPhoto(string photoPath)

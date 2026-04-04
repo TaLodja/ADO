@@ -35,6 +35,12 @@ namespace Academy
             new Query("Disciplines","*"),
             new Query("Teachers",   "*")
         };
+        Query TeachersAndDiscipline = new Query
+                (
+                "Teachers,TeachersDisciplinesRelation,Disciplines",
+                "*",
+                "teacher_id = teacher AND discipline_id = discipline"
+                );
         Connector connector;
         //Connector movies_connector;
         DataGridView[] tables = null;

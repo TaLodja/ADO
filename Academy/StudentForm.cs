@@ -15,22 +15,21 @@ namespace Academy
 {
     public partial class StudentForm : HumanForm
     {
-        private MainForm mainForm;
-        Connector connector;
+        Connector connector = new Connector(ConfigurationManager.ConnectionStrings["SPU_411_Import"].ConnectionString);
+        string current_photo_path = "";
+        //OpenFileDialog openFileDialog;
         public StudentForm(MainForm fromForm)
         {
             InitializeComponent();
-            connector = new Connector(ConfigurationManager.ConnectionStrings["SPU_411_Import"].ConnectionString);
-            rtbLastName.Text = "Карлсон";
-            rtbFirstName.Text = "Карл";
-            rtbMiddleName.Text = "Карлович";
-            dtpBirthDate.Value = DateTime.Parse("2010-08-12");
+            //rtbLastName.Text = "Карлсон";
+            //rtbFirstName.Text = "Карл";
+            //rtbMiddleName.Text = "Карлович";
+            //dtpBirthDate.Value = DateTime.Parse("2010-08-12");
             fromForm.LoadDataToComboBox(cbStudentsGroup);
         }
         public StudentForm(MainForm fromForm, string last_name, string first_name, string middle_name, string birth_date, string group)
         {
             InitializeComponent();
-            connector = new Connector(ConfigurationManager.ConnectionStrings["SPU_411_Import"].ConnectionString);
             rtbLastName.Text = last_name;
             rtbFirstName.Text = first_name;
             rtbMiddleName.Text = middle_name;
@@ -43,7 +42,13 @@ namespace Academy
             {
                 byte[] photo = connector.PhotoFromDB($"SELECT photo FROM Students WHERE last_name=N'{last_name}'");
                 ByteArrayToImage(photo);
+                current_photo_path = photoPath; 
             }
+            //openFileDialog = 
+            //if (pictureBoxPhoto.Image != null)
+            //{
+            //    string 
+            //}
 
         }
 
@@ -66,7 +71,7 @@ namespace Academy
                 //+ $"AND birth_date=N'{dtpBirthDate.Value.ToString("yyyy-MM-dd")}'"
                 ;
             //Console.WriteLine($"{connector.Scalar($"SELECT photo FROM Students WHERE last_name=N'{rtbLastName.Text}'")}");
-            if (pictureBoxPhoto.Image != null && connector.Scalar($"SELECT photo FROM Students WHERE {photo_condition}").ToString() == "" )
+            if (pictureBoxPhoto.Image != null && (connector.Scalar($"SELECT photo FROM Students WHERE {photo_condition}").ToString() == "" || current_photo_path != photoPath))
                 connector.Update($"UPDATE Students SET photo = (SELECT BulkColumn FROM OPENROWSET(BULK N'{photoPath}', SINGLE_BLOB) AS image) WHERE {photo_condition}");
         }
     }

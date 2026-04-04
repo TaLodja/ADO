@@ -24,5 +24,22 @@ namespace Academy
             //cmd += ";";
             return cmd;
         }
+        public Query ChangeQuery(string addTables, string addFields = "", string addCondition = "")
+        {
+            Query newQuery = new Query(this.Tables, this.Fields, this.Condition);
+            if (addTables != "") newQuery.Tables += $",{addTables}";
+            if (addFields != "")
+            {
+                if (newQuery.Fields == "*") newQuery.Fields = "";
+                else newQuery.Fields += ",";
+                newQuery.Fields += $"{addFields}";
+            }
+
+            if (newQuery.Condition != "" && addCondition != "")
+                newQuery.Condition += " AND ";
+            if (addCondition != "")
+                newQuery.Condition += $"{addCondition}";
+            return newQuery;
+        }
     }
 }
