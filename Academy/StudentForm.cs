@@ -24,7 +24,6 @@ namespace Academy
             cbStudentsGroup.DataSource = DataBase.Connector.Select("*", "Groups");
             cbStudentsGroup.DisplayMember = "group_name";
             cbStudentsGroup.ValueMember = "group_id";
-
         }
         public StudentForm(int id) : this()
         {

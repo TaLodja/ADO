@@ -142,12 +142,20 @@ namespace Academy
         {
             TeacherForm form = new TeacherForm();
             form.ShowDialog();
+            tabControl_SelectedIndexChanged(tabControl, null);
         }
 
         private void dgvStudents_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             int i = Convert.ToInt32(dgvStudents.Rows[e.RowIndex].Cells[0].Value);
             StudentForm form = new StudentForm(i);
+            form.ShowDialog();
+        }
+
+        private void dgvTeachers_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int i = Convert.ToInt32(dgvTeachers.Rows[e.RowIndex].Cells[0].Value);
+            TeacherForm form = new TeacherForm(i);
             form.ShowDialog();
         }
     }

@@ -53,5 +53,9 @@ namespace Academy.Models
         {
             return $"last_name=N'{last_name}',first_name=N'{first_name}',middle_name=N'{middle_name}',birth_date=N'{birth_date}',email=N'{email}',phone=N'{phone}'";
         }
+        public virtual string GetCondition()
+        {
+            return $"last_name=N'{last_name}' AND first_name=N'{first_name}' AND middle_name=N'{middle_name}' AND birth_date=N'{birth_date}'";
+        }
     }
 }

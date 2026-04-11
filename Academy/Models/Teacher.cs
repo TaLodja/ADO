@@ -8,30 +8,32 @@ using System.Drawing;
 
 namespace Academy.Models
 {
-    internal class Student : Human
+    internal class Teacher : Human
     {
-        int group;
-        public Student
+        string work_since;
+        string rate;
+        public Teacher
             (
             int id,
             string last_name, string first_name, string middle_name, string birth_date,
             string email, string phone, Image photo,
-            int group
+            string work_since, string rate
             ) : base(id, last_name, first_name, middle_name, birth_date, email, phone, photo)
         {
-            this.group = group;
+            this.work_since = work_since;
+            this.rate = rate;
         }
         public override string GetNames()
         {
-            return base.GetNames() + ",[group]";
+            return base.GetNames() + ",work_since,rate";
         }
         public override string ToString()
         {
-            return base.ToString() + $",{group}";
+            return base.ToString() + $",N'{work_since}',N'{rate}'";
         }
         public override string ToStringUpdate()
         {
-            return base.ToStringUpdate()+$",[group]={group}";
+            return base.ToStringUpdate() + $",work_since=N'{work_since}',rate=N'{rate}'";
         }
     }
 }
